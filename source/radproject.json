@@ -1,0 +1,22 @@
+{
+	"name": "rad_project",
+	"application": null,
+	"libs": {
+	},
+	"view": {
+		"screen.home": "/Users/p54l0m5h1k/prj/etc/base_cordova_app/source/source/views/screen.home"
+	},
+	"model": {
+		"model.person": "/Users/p54l0m5h1k/prj/etc/base_cordova_app/source/source/models/model.person"
+	},
+	"service": {
+		"service.json_loader": "/Users/p54l0m5h1k/prj/etc/base_cordova_app/source/source/service/service.json_loader"
+	},
+	"screen": {},
+	"external": {
+	},
+	"links": {},
+	"collection": {
+		"collection.phones": "/Users/p54l0m5h1k/prj/etc/base_cordova_app/source/source/models/collection.phones"
+	}
+}

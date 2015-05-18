@@ -1,0 +1,53 @@
+{
+	"name": "BaseCordovaExample",
+	"version": "0.0.1",
+	"description": "Basic skeleton for Cordova application",
+	"main": "gulpfile.js",
+	"dependencies": {
+		"babel": "*",
+		"bower-requirejs": "*",
+		"connect": "*",
+		"del": "*",
+		"end-of-stream": "*",
+		"gulp": "*",
+		"gulp-babel": "*",
+		"gulp-bower": "*",
+		"gulp-cache": "*",
+		"gulp-concat": "*",
+		"gulp-connect": "*",
+		"gulp-csso": "*",
+		"gulp-imagemin": "*",
+		"gulp-jade": "*",
+		"gulp-less": "*",
+		"gulp-livereload": "*",
+		"gulp-load-plugins": "*",
+		"gulp-myth": "*",
+		"gulp-preprocess": "*",
+		"gulp-prettify": "*",
+		"gulp-rename": "*",
+		"gulp-rigger": "*",
+		"gulp-sourcemaps": "*",
+		"gulp-uglify": "*",
+		"gulp-watch": "*",
+		"imagemin-pngquant": "*",
+		"jade": "*",
+		"jade-babel": "*",
+		"less": "*",
+		"main-bower-files": "*",
+		"opn": "*",
+		"rimraf": "*",
+		"run-sequence": "*",
+		"tiny-lr": "*",
+		"wiredep": "*"
+	},
+	"scripts": {
+		"test": "test-it"
+	},
+	"license": "MIT",
+	"keywords": [],
+	"authors": [
+		"Anton Trofimenko <p54l0m5h1k@gmail.com>"
+	],
+	"private": true,
+	"devDependencies": {}
+}

@@ -1,0 +1,6 @@
+#screen_main
+    center
+        img(alt='CrossPlatform' src='source/assets/img/cross_platform_icon.png')
+    | {{# model.forEach(function(item, index){ }}
+    include _person.jade
+    | {{# }) }}
