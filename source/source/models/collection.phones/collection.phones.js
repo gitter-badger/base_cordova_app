@@ -11,16 +11,16 @@ define("collection.phones", ["model.person"], function () {
 		defaults: [
 			{
 				name: "Rasmus Lerdorf",
-				phone: "555-111-222"
+				phone: "555-111-222",
 			},
 			{
 				name: "Phil Sturgeon",
-				phone: "555-222-333"
+				phone: "555-222-333",
 			},
 			{
 				name: "Davey Shafik",
-				phone: "555-333-444"
-			}
+				phone: "555-333-444",
+			},
 		],
 		initialize: function () {
 			this.defaults.forEach(
