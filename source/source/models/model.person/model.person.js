@@ -1,3 +1,4 @@
+"use strict";
 define("model.person", ["backbone"], function () {
 	/**
 	 * @class model.person

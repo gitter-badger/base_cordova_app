@@ -1,0 +1,18 @@
+@charset "utf-8";
+@import "rad";
+@import "transitions";
+@import "reset";
+@import "font";
+@import "constants";
+
+body {
+  //font-family: system, -apple-system, "Share Tech Mono", monospace;
+  font-family: system, -apple-system, monospace;
+}
+
+#screen_main > ul {
+  color: #fff;
+  background-color: $color-pink;
+  margin: 16px;
+  padding: 8px;
+}

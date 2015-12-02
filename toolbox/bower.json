@@ -1,52 +1,51 @@
 {
-	"name": "BaseCordovaExample",
-	"private": true,
-	"version": "0.0.1",
-	"description": "Basic skeleton for Cordova application",
-	"authors": [
-		"Anton Trofimenko <p54l0m5h1k@gmail.com>"
-	],
-	"license": "MIT",
-	"dependencies": {
-		"backbone": "~1.1.*",
-		"core.js": "~0.6.*",
-		"immutable": "~3.6.*",
-		"is_js": "~0.7.*",
-		"iscroll": "~4.*",
-		"jquery": "~2.1.*",
-		"json3": "~3.3.*",
-		"requirejs": "~2.1.*",
-		"types.js": "~1.4.*",
-		"underscore": "~1.8.*",
-		"lesshat": "~3.0.*"
-	},
-	"devDependencies": {
-	},
-	"overrides": {
-		"immutable": {
-			"main": "dist/immutable.min.js"
-		},
-		"is_js": {
-			"main": "is.min.js"
-		},
-		"jquery": {
-			"main": [
-				"dist/jquery.min.js",
-				"dist/jquery.min.map"
-			]
-		},
-		"lodash": {
-			"main": "lodash.min.js"
-		},
-		"types.js": {
-			"main": "types.min.js"
-		}
-	},
-	"ignore": [
-		"**/.*",
-		"node_modules",
-		"vendors",
-		"test",
-		"tests"
-	]
+  "name": "BaseCordovaExample",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Basic skeleton for Cordova application",
+  "authors": [
+    "Anton Trofimenko <p54l0m5h1k@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "backbone": "~1.2.*",
+    "core.js": "~1.2.*",
+    "immutable": "~3.7.*",
+    "iscroll": "~4.*",
+    "jquery": "~3.*",
+    "json3": "~3.3.*",
+    "requirejs": "~2.1.*",
+    "types.js": "~1.4.*",
+    "polymer": "Polymer/polymer#^1.2.*",
+    "paper-button": "PolymerElements/paper-button#~1.0.8",
+    "bootstrap": "4.0.0-alpha"
+  },
+  "devDependencies": {},
+  "overrides": {
+    "immutable": {
+      "main": "dist/immutable.min.js"
+    },
+    "is_js": {
+      "main": "is.min.js"
+    },
+    "jquery": {
+      "main": [
+        "dist/jquery.min.js",
+        "dist/jquery.min.map"
+      ]
+    },
+    "lodash": {
+      "main": "lodash.min.js"
+    },
+    "types.js": {
+      "main": "types.min.js"
+    }
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "vendors",
+    "test",
+    "tests"
+  ]
 }

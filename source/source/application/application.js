@@ -1,3 +1,4 @@
+"use strict";
 RAD.application(function (core) {
 	var app = this;
 	app.start = function () {

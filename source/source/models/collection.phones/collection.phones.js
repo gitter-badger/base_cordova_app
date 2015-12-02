@@ -1,3 +1,4 @@
+"use strict";
 define("collection.phones", ["model.person"], function () {
 	/**
 	 * @class coleection.phones
@@ -22,7 +23,11 @@ define("collection.phones", ["model.person"], function () {
 			}
 		],
 		initialize: function () {
-			this.defaults.forEach(model => this.add((new (RAD.model("model.person"))).set(model)));
+			this.defaults.forEach(
+				model => this.add(
+					(new (RAD.model("model.person"))).set(model)
+				)
+			);
 		}
 	}), true);
 });

@@ -1,20 +1,53 @@
+"use strict";
 (function (document, window) {
 	// don't remove ## marks, CLI uses them for updating this file
 	// #script_begin#
-	var scripts = [
-		"source/views/screen.home/screen.home.js",
-		"source/models/collection.phones/collection.phones.js",
-		"source/models/model.person/model.person.js",
-		"source/service/service.json_loader/service.json_loader.js",
+	let scripts = [
 		"source/application/application.js"
 	];
+	{
+		let views = {
+			screen: [
+				"auth",
+				"home",
+			],
+			widget: [],
+			dialog: [],
+		};
+		let models = {
+			collection: [
+				"phones",
+			],
+			model: [
+				"account",
+				"person",
+			],
+		};
+		let services = {
+			service: [
+				"json_loader",
+			],
+			helper: [
+				"storage"
+			]
+		};
+		for (let block in views) {
+			views[block].forEach(name => scripts.push(`source/views/${block}.${name}/${block}.${name}.js`));
+		}
+		for (let block in models) {
+			models[block].forEach(name => scripts.push(`source/models/${block}.${name}/${block}.${name}.js`));
+		}
+		for (let block in services) {
+			services[block].forEach(name => scripts.push(`source/services/${block}.${name}/${block}.${name}.js`));
+		}
+	}
 	// #script_end#
 	function onEndLoad() {
 		let core = window.RAD.core,
 			application = window.RAD.application,
 			coreOptions = {
 				defaultBackstack: false,
-				defaultAnimation: 'none',
+				defaultAnimation: "none",
 				animationTimeout: 3000,
 				debug: false
 			};
@@ -23,40 +56,33 @@
 		//start
 		application.start();
 	}
-	var paths = {
+
+	let paths = {
 		application: "../source/application/application",
-		backbone: "backbone.min",
 		cordova: "../cordova",
-		iscroll: "iscroll.min",
-		jquery: "jquery.min",
 		rad: "../source/rad/rad",
-		underscore: "underscore.min"
 	};
-	var vendorNames = [
+	let vendorNames = [
+		"backbone",
+		"bootstrap",
 		"core",
 		"immutable",
-		//"is", //current version has broken AMD module loading, also broken on WebPack
+		"iscroll",
+		"jquery",
 		"json3",
-		"types"
+		"types",
+		"webcomponents",
+		"underscore",
 	];
-	vendorNames.forEach(function (vendor) {
-		paths[vendor] = vendor + ".min";
-	});
-	var shim = {
-		application: {
-			deps: ["rad"]
-		},
-		rad: {
-			deps: ["backbone", "cordova", "iscroll"]
-		},
-		backbone: {
-			deps: ["jquery", "underscore"],
-			exports: "Backbone"
-		},
-		cordova: {}
+	vendorNames.forEach(vendor => paths[vendor] = vendor + ".min");
+	let shim = {
+		application: {deps: ["rad",],},
+		backbone: {deps: ["jquery", "underscore",], exports: "Backbone",},
+		bootstrap: {deps: ["jquery",]},
+		cordova: {},
+		rad: {deps: ["backbone", "cordova", "iscroll",],},
 	};
 	shim.cordova.deps = vendorNames;
-
 	/**
 	 * Loads scripts
 	 * @param {String} url
@@ -78,9 +104,7 @@
 	 */
 	function loadCSS(url) {
 		if (Object.prototype.toString.call(url) === "[object Array]") {
-			url.forEach(function (loadUrl) {
-				loadCSS(loadUrl);
-			});
+			url.forEach(loadUrl => loadCSS(loadUrl));
 			return;
 		}
 		let link = document.createElement("link");
@@ -90,10 +114,24 @@
 	}
 
 	loadCSS([
-		"source/assets/css/rad.css",
-		"source/assets/css/transitions.css",
-		"source/assets/css/index.css"
+		"vendors/bootstrap.min.css",
+		"source/assets/css/index.css",
 	]);
+	/**
+	 * Insert links of with CSS files
+	 * @param {Array|String} url
+	 */
+	function loadHTML(url) {
+		if (Object.prototype.toString.call(url) === "[object Array]") {
+			url.forEach(loadUrl => loadHTML(loadUrl));
+			return;
+		}
+		let link = document.createElement("link");
+		link.setAttribute("rel", "import");
+		link.setAttribute("href", "vendors/" + url + ".html");
+		document.getElementsByTagName("head")[0].appendChild(link);
+	}
+
 	loadScript("vendors/require.min.js", function () {
 		requirejs.config({
 			baseUrl: "vendors",
@@ -102,9 +140,14 @@
 			waitSeconds: 5e3
 		});
 		require(["rad"], function () {
+				//loadHTML([
+				//	"polymer",
+				//	"paper-button",
+				//	"paper-button-behavior",
+				//]);
 				let include = {};
 				let applicationjs = "source/application/application.js";
-				scripts.forEach(function (scriptName) {
+				scripts.forEach(scriptName => {
 					if (scriptName !== applicationjs) {
 						include[scriptName.split("/").pop().slice(0, -3)] = scriptName.slice(0, -3);
 					}
@@ -114,9 +157,9 @@
 					paths: include,
 					shim: {}
 				});
-				require(Object.keys(include), function () {
-					window.RAD.scriptLoader.loadScripts([applicationjs], onEndLoad);
-				});
+				require(Object.keys(include), () =>
+					window.RAD.scriptLoader.loadScripts([applicationjs], onEndLoad)
+				);
 			}
 		);
 	});
