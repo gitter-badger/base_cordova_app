@@ -1,8 +1,8 @@
 "use strict";
 /**
- * @class service.json_loader
+ * @class service.rest
  */
-RAD.service("service.json_loader", RAD.Blanks.Service.extend({
+RAD.service("service.rest", RAD.Blanks.Service.extend({
 	onReceiveMsg: function (channel, data) {
 		window.console.log("channel:", channel, "data:", data);
 	}

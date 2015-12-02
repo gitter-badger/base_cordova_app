@@ -25,9 +25,10 @@
 		};
 		let services = {
 			service: [
-				"json_loader",
+				"rest",
 			],
 			helper: [
+				"convert",
 				"storage"
 			]
 		};
@@ -63,6 +64,7 @@
 		rad: "../source/rad/rad",
 	};
 	let vendorNames = [
+		"async",
 		"backbone",
 		"bootstrap",
 		"core",
