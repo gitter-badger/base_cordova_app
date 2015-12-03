@@ -120,13 +120,14 @@ var gulp = (function () {
 				compact: true,
 				plugins: [
 					//__dirname + "/node_modules/babel-plugin-transform-runtime",
+					//__dirname + "/node_modules/babel-plugin-transform-decorators-legacy",
 				],
 				presets: [
 					__dirname + "/node_modules/babel-preset-es2015",
-					//__dirname + "/node_modules/babel-preset-stage-0",
-					//__dirname + "/node_modules/babel-preset-stage-1",
-					//__dirname + "/node_modules/babel-preset-stage-2",
-					//__dirname + "/node_modules/babel-preset-stage-3",
+					__dirname + "/node_modules/babel-preset-stage-0",
+					__dirname + "/node_modules/babel-preset-stage-1",
+					__dirname + "/node_modules/babel-preset-stage-2",
+					__dirname + "/node_modules/babel-preset-stage-3",
 				],
 				sourceMap: true,
 			},

@@ -3,6 +3,7 @@ RAD.application(function (core) {
 	var app = this;
 	app.start = function () {
 		function onDeviceReady () {
+			core.startAll();
 			core.publish("navigation.show", {
 				container_id: "#screen",
 				content: "screen.home",

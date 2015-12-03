@@ -1,8 +1,7 @@
 "use strict";
-/**
- * @class helper.convert
- */
-RAD.namespace("helper.convert", {
-	store: function () {
-	}
+define("helper.convert", [], function () {
+	/**
+	 * @class RAD.helper.convert
+	 */
+	RAD.namespace("helper.convert", {});
 });

@@ -1,7 +1,7 @@
 "use strict";
 define("model.account", ["backbone"], function () {
 	/**
-	 * @class model.account
+	 * @class RAD.model.account
 	 */
 	RAD.model("model.account", Backbone.Model.extend({
 		defaults: {

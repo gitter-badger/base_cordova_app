@@ -1,7 +1,7 @@
 "use strict";
 define("collection.phones", ["model.person"], function () {
 	/**
-	 * @class coleection.phones
+	 * @class RAD.coleection.phones
 	 */
 	RAD.model("collection.phones", Backbone.Collection.extend({
 		/**

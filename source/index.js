@@ -20,16 +20,19 @@
 			],
 			model: [
 				"account",
-				"person",
 			],
 		};
 		let services = {
 			service: [
+				"basic",
+				"account",
 				"rest",
 			],
 			helper: [
 				"convert",
-				"storage"
+				"fetch",
+				"storage",
+				"settings",
 			]
 		};
 		for (let block in views) {
@@ -71,6 +74,7 @@
 		"immutable",
 		"iscroll",
 		"jquery",
+		"fetch",
 		"json3",
 		"types",
 		"webcomponents",

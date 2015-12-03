@@ -1,8 +1,5 @@
 "use strict";
 /**
- * @class helper.storage
+ * @class RAD.helper.storage
  */
-RAD.namespace("helper.storage", {
-	store: function () {
-	}
-});
+RAD.namespace("helper.storage", {});

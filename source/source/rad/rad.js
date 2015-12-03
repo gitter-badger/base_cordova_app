@@ -1,3 +1,4 @@
+"use strict";
 (function (define) {
 	function _require(index) {
 		var module = _require.cache[index];
@@ -917,6 +918,9 @@
 				}
 
 				self.extend = function (proto) {
+					if (proto.constructor.name !== "Object") {
+						console.info(proto.constructor.name);
+					}
 					var key, k = function (magic) {
 						if (magic !== isFn && isFn(this.initialize)) {
 							this.initialize.apply(this, arguments);

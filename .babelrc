@@ -1,0 +1,10 @@
+{
+	"plugins": [
+//		"transform-es2015-modules-umd",
+//		"transform-export-extensions",
+//		"transform-regenerator",
+//		"transform-undefined-to-void",
+//		"undeclared-variables-check",
+	],
+	"retainLines": true
+}
