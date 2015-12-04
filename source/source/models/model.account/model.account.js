@@ -1,13 +1,12 @@
 "use strict";
-define("model.account", ["backbone"], function () {
+define("model.account", ["backbone.localStorage"], function () {
 	let localModel = new Backbone.LocalStorage("model.account");
 	let ModelAccount = Backbone.Model.extend({
 		localStorage: localModel,
 		defaults: {
-			first_name: "",
-			last_name: "",
+			fullName: "",
 			email: "",
-			session_id: null,
+			accessToken: null,
 		},
 		initialize: function () {
 			this.fetch();

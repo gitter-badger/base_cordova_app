@@ -1,12 +1,12 @@
 "use strict";
-define("screen.auth", ["model.account"], function () {
+define("view.screen.auth", ["model.account"], function () {
 	/**
-	 * @class screen.auth
+	 * @class RAD.screen.auth
 	 */
-	RAD.view("screen.auth", RAD.Blanks.View.extend({
+	RAD.view("view.screen.auth", RAD.Blanks.View.extend({
 		url: "source/views/screen.auth/screen.auth.ejs",
 		/**
-		 * @see collection.phones
+		 * @see RAD.model.account
 		 */
 		model: RAD.model("model.account")
 	}));

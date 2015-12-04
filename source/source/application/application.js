@@ -2,7 +2,7 @@
 RAD.application(function (core) {
 	var app = this;
 	app.start = function () {
-		function onDeviceReady () {
+		function onDeviceReady() {
 			core.startAll();
 			core.publish("navigation.show", {
 				container_id: "#screen",
@@ -10,6 +10,7 @@ RAD.application(function (core) {
 				animation: "none"
 			});
 		}
+
 		if (window["_cordovaNative"]) {
 			document.addEventListener("deviceready", onDeviceReady, false);
 		} else {

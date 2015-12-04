@@ -1775,13 +1775,19 @@
 							data.direction = data.direction !== undefined ? data.direction : true;
 							navigateView(data);
 							break;
-						case 'dialog':
-							if (parts[2] === 'show') {
-								showWindow(data);
+						case "dialog":
+							// @todo < do not match with framework #changes_in_core
+							switch (parts[2]) {
+								case "open":
+								case "show":
+									showWindow(data);
+									break;
+								case "close":
+								case "hide":
+									closeWindow(data);
+									break;
 							}
-							if (parts[2] === 'close') {
-								closeWindow(data);
-							}
+							// >
 							break;
 						case 'toast':
 						case 'popup':

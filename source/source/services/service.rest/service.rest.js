@@ -93,7 +93,7 @@ define("service.rest", ["service.account", "helper.settings"], function () {
 			}
 			return link;
 		},
-		auth: function (login, password, onSuccess, onError) {
+		user_authorize: function (login, password, onSuccess, onError) {
 			onSuccess || (onSuccess = function () {
 				console.info(arguments[0]);
 			});
@@ -102,7 +102,7 @@ define("service.rest", ["service.account", "helper.settings"], function () {
 			});
 			let that = this;
 			this._fetch(
-				this._urlCompose("index.php")
+				this._urlCompose()
 				, function fetchSuccess(json) {
 					that.publish("service.account.auth_new", json.data);
 					onSuccess(json.data);
@@ -111,6 +111,18 @@ define("service.rest", ["service.account", "helper.settings"], function () {
 					onError(...args);
 				}
 			);
-		}
+		},
+		user_register: function (fullname, email, onSuccess, onError) {
+			//
+		},
+		quiz_list: function () {
+			//
+		},
+		quiz_start: function () {
+			//
+		},
+		answer_send: function () {
+			//
+		},
 	}));
 });

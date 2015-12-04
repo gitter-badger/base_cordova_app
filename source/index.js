@@ -3,7 +3,7 @@
 	// don't remove ## marks, CLI uses them for updating this file
 	// #script_begin#
 	let scripts = [
-		"source/application/application.js"
+		"source/application/application.js",
 	];
 	{
 		let views = {
@@ -11,7 +11,9 @@
 				"auth",
 				"home",
 			],
-			widget: [],
+			widget: [
+				"spin",
+			],
 			dialog: [],
 		};
 		let models = {

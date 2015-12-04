@@ -1,0 +1,61 @@
+@charset "utf-8";
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+#widget-popup {
+	background-color: rgba(255, 255, 255, .66);
+	height: 100%;
+	margin: 0 auto;
+	vertical-align: middle;
+	width: 100%;
+}
+#widget-spin_wrapper {
+	height: 100%;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+}
+#widget-spinner,
+#widget-spinner .before,
+#widget-spinner .after {
+	border: 6px solid transparent;
+	border-radius: 50%;
+}
+#widget-spinner .before,
+#widget-spinner .after {
+	position: absolute;
+}
+#widget-spinner {
+	animation: spin 2s linear infinite;
+	border-top-color: #3498db;
+	display: block;
+	height: 150px;
+	left: 50%;
+	margin: -75px 0 0 -75px;
+	position: relative;
+	top: 50%;
+	width: 150px;
+}
+#widget-spinner .before {
+	animation: spin 3s linear infinite;
+	border-top-color: #e74c3c;
+	bottom: 5px;
+	left: 5px;
+	right: 5px;
+	top: 5px;
+}
+#widget-spinner .after {
+	animation: spin 1.5s linear infinite;
+	border-top-color: #f9c922;
+	bottom: 15px;
+	left: 15px;
+	right: 15px;
+	top: 15px;
+}

@@ -1,0 +1,19 @@
+<div class="dialog-wrapper">
+	<div class="dialog-frame {{= model.type }}">
+		<div class="dialog-content" data-template>
+			<div class="dialog-icon"></div>
+			<div class="dialog-message">
+			   <span class="dialog-text">{{ model.message }}</span>
+			</div>
+{{# if ( _.size(model.button) > 2 || _.isPlainObject(model.button) ) { }}
+	{{# _.each( model.button, function (item, index) { }}
+		<span class="dialog-title dialog-title-full blank" data-set="{{ index }}">{{ item.title }}</span>
+	{{# }) }}
+{{# } else { }}
+	{{# _.each( model.button, function (item, index) { }}
+		<span class="dialog-title" data-set="{{ index }}">{{ item.title }}</span>
+	{{# }) }}
+{{# } }}
+		</div>
+	</div>
+</div>

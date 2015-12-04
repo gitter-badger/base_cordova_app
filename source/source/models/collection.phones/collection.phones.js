@@ -5,7 +5,7 @@ define("collection.phones", ["model.person"], function () {
 	 */
 	RAD.model("collection.phones", Backbone.Collection.extend({
 		/**
-		 * @see model.person
+		 * @see RAD.model.person
 		 */
 		model: RAD.model("model.person"),
 		defaults: [

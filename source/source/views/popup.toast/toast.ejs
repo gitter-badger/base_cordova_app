@@ -1,0 +1,6 @@
+<div class="toast-frame  {{= model.type }}">
+	{{# if (model.title.length > 0 ) { }}
+	<div class="toast-title">{{= model.title }}</div>
+	{{# } }}
+	<div class="toast-content"><div class="toast-icon"></div>{{ model.message }}</div>
+</div>
