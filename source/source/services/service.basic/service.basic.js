@@ -10,16 +10,12 @@ define("service.basic", [], function () {
 		 */
 		onReceiveMsg: function (channel, data) {
 			//window.console.info("channel:", channel, "data:", data);
-			channel = channel.split(".");
-			if (
-				2 in channel
-				&& channel[2] in this
-				&& _.isFunction(this[channel[2]])
-			) {
+			let chunks = channel.split(".");
+			if ((2 in chunks) && (chunks[2] in this) && _.isFunction(this[chunks[2]])) {
 				if (Array.isArray(data)) {
-					this[channel[2]](...data);
+					this[chunks[2]](...data);
 				} else {
-					this[channel[2]](data);
+					this[chunks[2]](data);
 				}
 			}
 		}

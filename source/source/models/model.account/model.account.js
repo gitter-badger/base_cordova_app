@@ -1,14 +1,21 @@
 "use strict";
 define("model.account", ["backbone"], function () {
-	/**
-	 * @class RAD.model.account
-	 */
-	RAD.model("model.account", Backbone.Model.extend({
+	let localModel = new Backbone.LocalStorage("model.account");
+	let ModelAccount = Backbone.Model.extend({
+		localStorage: localModel,
 		defaults: {
 			first_name: "",
 			last_name: "",
 			email: "",
 			session_id: null,
+		},
+		initialize: function () {
+			this.fetch();
 		}
-	}), true);
+	});
+	let modelAccount = new ModelAccount({id: "model.account"});
+	/**
+	 * @class RAD.model.account
+	 */
+	RAD.model("model.account", modelAccount);
 });

@@ -16,14 +16,18 @@ define("helper.fetch", ["helper.settings"], function () {
 			if (response instanceof Response) {
 				return response;
 			} else {
-				throw new Error("Timeout");
+				let error = new Error("Timeout");
+				error.message = "Timeout";
+				error.response = response;
+				throw error;
 			}
 		},
 		isOk: function (response) {
 			if (response.ok) {
 				return response;
 			} else {
-				var error = new Error(response.statusText);
+				var error = new Error(response.statusText || response.status);
+				error.message = response.statusText || response.status;
 				error.response = response;
 				throw error;
 			}
@@ -41,7 +45,7 @@ define("helper.fetch", ["helper.settings"], function () {
 			if (response.status >= 200 && response.status < 300) {
 				return response;
 			} else {
-				var error = new Error(response.statusText);
+				var error = new Error(response.statusText || response.status);
 				error.response = response;
 				throw error;
 			}

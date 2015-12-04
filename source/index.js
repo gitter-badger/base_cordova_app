@@ -20,6 +20,7 @@
 			],
 			model: [
 				"account",
+				"person",
 			],
 		};
 		let services = {
@@ -69,6 +70,7 @@
 	let vendorNames = [
 		"async",
 		"backbone",
+		"backbone.localStorage",
 		"bootstrap",
 		"core",
 		"immutable",
@@ -84,6 +86,7 @@
 	let shim = {
 		application: {deps: ["rad",],},
 		backbone: {deps: ["jquery", "underscore",], exports: "Backbone",},
+		"backbone.localStorage": {deps: ["backbone",],},
 		bootstrap: {deps: ["jquery",]},
 		cordova: {},
 		rad: {deps: ["backbone", "cordova", "iscroll",],},

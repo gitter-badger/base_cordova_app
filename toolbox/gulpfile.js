@@ -310,7 +310,7 @@ var gulp = (function () {
 	});
 	/** Copy main bower files to build folder */
 	gulp.task("js_vendors", function () {
-		let poly = main_bower_files({
+		let main_files = main_bower_files({
 			"overrides": {
 				"bootstrap": {
 					"main": [
@@ -323,7 +323,7 @@ var gulp = (function () {
 		//poly.push(cfg.folder.dest + cfg.folder.vendors + "*.html");
 		//poly.push(cfg.folder.dest + cfg.folder.vendors + "**/*.html");
 		return gulp
-			.src(poly, {base: ""})
+			.src(main_files, {base: ""})
 			.on("error", swallowError)
 			.pipe(gulp.dest(cfg.dest.js_vendors));
 	});

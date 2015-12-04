@@ -5,98 +5,112 @@ define("service.rest", ["service.account", "helper.settings"], function () {
 	 */
 	RAD.service("service.rest", RAD.Blanks.Service.extend({
 		onReceiveMsg: RAD.core.getService("service.basic").onReceiveMsg,
+		/**
+		 * @constructor
+		 */
 		onInitialize: function () {
-			var headers = {};
-			headers["Accept-Language"] = "ru";
-			//headers["X-API-Version"] = "1.0.0";
 			$.ajaxSetup({
 				cache: false,
 				contentType: "application/json",
 				crossDomain: true,
 				dataType: "json",
-				headers: headers,
+				headers: {
+					"Accept-Language": "ru",
+				},
 				timeout: 60e3,
 				xhrFields: {
-					//withCredentials: true,
+					withCredentials: false,
 				},
 			});
-			headers = null;
 		},
 		/**
-		 * @param appendNew
+		 * Basic headers for REST
+		 * @param headersToAppend
 		 * @return {Headers}
 		 * @private
 		 */
-		_headersCompose: function (appendNew) {
+		_headersCompose: function (headersToAppend) {
 			let headers = new Headers();
 			headers.set("Accept", "application/json");
 			headers.set("Content-Type", "application/json");
-			_.each(appendNew, (name, value) => headers.set(name, value));
+			_.each(headersToAppend, (name, value) => headers.set(name, value));
 			return headers;
-			/*
-			 // Create an empty Headers instance
-			 var headers = new Headers();
-			 // Add a few headers
-			 headers.append('Content-Type', 'text/plain');
-			 headers.append('X-My-Custom-Header', 'CustomValue');
-			 // Check, get, and set header values
-			 headers.has('Content-Type'); // true
-			 headers.get('Content-Type'); // "text/plain"
-			 headers.set('Content-Type', 'application/json');
-			 // Delete a header
-			 headers.delete('X-My-Custom-Header');
-			 // Add initial values
-			 var headers = new Headers({
-			 'Content-Type': 'text/plain',
-			 'X-My-Custom-Header': 'CustomValue'
-			 });
-			 */
 		},
 		/**
+		 * Return basic options for fetch request
+		 * @param {Object=} options
+		 * @return {Object}
 		 * @private
 		 */
-		_fetch: function () {
-			var request = new Request(RAD.helper.settings.server.domain, {
-				headers: this._headersCompose({
-					//"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-				}),
+		_fetchOptions: function (options) {
+			if (!options || !_.isPlainObject(options)) {
+				options = {};
+			}
+			let basic = {
+				headers: this._headersCompose(),
 				method: "GET",
 				mode: "cors",
-				credentials: ["include", "same-origin", "none"][2],
+				credentials: "none",
 				cache: "no-cache",
 				redirect: "follow",
-				//body: JSON3.stringify({}),
-				//method - GET, POST, PUT, DELETE, HEAD
-				//url - URL of the request
-				//headers - associated Headers object
-				//referrer - referrer of the request
-				//mode - cors, no-cors, same-origin
-				//credentials - should cookies go with the request? omit, same-origin
-				//redirect - follow, error, manual
-				//integrity - subresource integrity value
-				//cache - cache mode (default, reload, no-cache)
-			});
+			};
+			return _.extend(basic, options);
+		},
+		/**
+		 * Compose fetch request
+		 * @param {String} url
+		 * @param {Function} onSuccess
+		 * @param {Function} onError
+		 * @param {Object=} requrestOptions
+		 * @param {Number=} timeoutInMs
+		 * @private
+		 */
+		_fetch: function (url, onSuccess, onError, requrestOptions = {}, timeoutInMs = 60e3) {
+			let request = new Request(url, _.extend(this._fetchOptions, requrestOptions));
 			var Fetch = RAD.helper.fetch;
-			Promise.race([Fetch.timeoutPromise(), fetch(request),])
+			Promise.race([Fetch.timeoutPromise(timeoutInMs), fetch(request),])
 				.then(Fetch.isPromise)
 				.then(Fetch.isOk)
 				.then(Fetch.statusOk)
 				.then(Fetch.responseJson)
-				.then(function (returnedValue) {
-					console.info(returnedValue);
-				})
-				.catch(function (error) {
-					console.error(error);
-				});
+				.then(response => onSuccess(response))
+				.catch(response => onError(response));
 		},
-		auth: function (login = "", password = "", onSuccess = new Function, onError = new Function) {
-			$.getJSON(RAD.helper.settings.server.domain, json => {
-				this.publish("service.account.auth_new", json.data);
-				onSuccess(json.data);
-			}, (...args) => {
-				console.warn("Error");
-				onError(...args);
+		/**
+		 * Compose url for fetch request
+		 * @param {String=""} url
+		 * @param {Boolean=true} addDomain
+		 * @param {Object=} getParams
+		 * @return {String}
+		 * @private
+		 */
+		_urlCompose: function (url = "", addDomain = true, getParams = {}) {
+			let link = "";
+			if (addDomain) {
+				link = RAD.helper.settings.server.domain + url;
+			} else {
+				link = url;
+			}
+			return link;
+		},
+		auth: function (login, password, onSuccess, onError) {
+			onSuccess || (onSuccess = function () {
+				console.info(arguments[0]);
 			});
+			onError || (onError = function () {
+				console.warn(arguments[0]);
+			});
+			let that = this;
+			this._fetch(
+				this._urlCompose("index.php")
+				, function fetchSuccess(json) {
+					that.publish("service.account.auth_new", json.data);
+					onSuccess(json.data);
+				}
+				, function fetchError(...args) {
+					onError(...args);
+				}
+			);
 		}
 	}));
 });
