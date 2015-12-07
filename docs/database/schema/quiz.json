@@ -1,0 +1,16 @@
+{
+	"title": "quiz",
+	"type": "object",
+	"properties": {
+		"nameOfQuiz": {
+			"type": "string"
+		},
+		"questions": {
+			"type": "array"
+		}
+	},
+	"required": [
+		"nameOfQuiz",
+		"questions"
+	]
+}

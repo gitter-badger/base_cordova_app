@@ -1,0 +1,31 @@
+{
+	"title": "question",
+	"type": "object",
+	"properties": {
+		"codeName": {
+			"type": "string"
+		},
+		"question": {
+			"type": "string"
+		},
+		"answers": {
+			"type": "array"
+		},
+		"answerMultiple": {
+			"type": "boolean"
+		},
+		"answerCorrect": {
+			"type": "array"
+		},
+		"score": {
+			"type": "integer"
+		}
+	},
+	"required": [
+		"codeName",
+		"answers",
+		"answerMultiple",
+		"answerCorrect",
+		"score"
+	]
+}

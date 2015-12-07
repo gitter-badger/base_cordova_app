@@ -1,0 +1,29 @@
+{
+	"title": "user",
+	"type": "object",
+	"properties": {
+		"fullName": {
+			"type": "string"
+		},
+		"email": {
+			"type": "string"
+		},
+		"password": {
+			"type": "string"
+		},
+		"registrationIP": {
+			"type": "string"
+		},
+		"registrationBrowser": {
+			"type": "string"
+		},
+		"accessToken": {
+			"type": "string"
+		}
+	},
+	"required": [
+		"fullName",
+		"email",
+		"password"
+	]
+}

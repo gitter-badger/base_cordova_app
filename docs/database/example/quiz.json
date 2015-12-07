@@ -1,0 +1,8 @@
+{
+	"nameOfQuiz": "Name of Quiz",
+	"questions": [
+		"id1",
+		"id2",
+		"id3"
+	]
+}

@@ -33,6 +33,10 @@ define("service.rest", ["service.account", "helper.settings"], function () {
 			let headers = new Headers();
 			headers.set("Accept", "application/json");
 			headers.set("Content-Type", "application/json");
+			let accessToken = RAD.model("model.account").get("accessToken");
+			if (accessToken) {
+				headers.set("accessToken", accessToken);
+			}
 			_.each(headersToAppend, (name, value) => headers.set(name, value));
 			return headers;
 		},
@@ -43,7 +47,7 @@ define("service.rest", ["service.account", "helper.settings"], function () {
 		 * @private
 		 */
 		_fetchOptions: function (options) {
-			if (!options || !_.isPlainObject(options)) {
+			if (!options || !_.isObject(options)) {
 				options = {};
 			}
 			let basic = {
@@ -54,6 +58,9 @@ define("service.rest", ["service.account", "helper.settings"], function () {
 				cache: "no-cache",
 				redirect: "follow",
 			};
+			if ("body" in options && _.isObject(options.body)) {
+				options.body = JSON3.stringify(options.body);
+			}
 			return _.extend(basic, options);
 		},
 		/**
@@ -66,7 +73,7 @@ define("service.rest", ["service.account", "helper.settings"], function () {
 		 * @private
 		 */
 		_fetch: function (url, onSuccess, onError, requrestOptions = {}, timeoutInMs = 60e3) {
-			let request = new Request(url, _.extend(this._fetchOptions, requrestOptions));
+			let request = new Request(url, this._fetchOptions(requrestOptions));
 			var Fetch = RAD.helper.fetch;
 			Promise.race([Fetch.timeoutPromise(timeoutInMs), fetch(request),])
 				.then(Fetch.isPromise)
@@ -102,9 +109,9 @@ define("service.rest", ["service.account", "helper.settings"], function () {
 			});
 			let that = this;
 			this._fetch(
-				this._urlCompose()
+				this._urlCompose("?path=user_authorize")
 				, function fetchSuccess(json) {
-					that.publish("service.account.auth_new", json.data);
+					that.publish("service.account.user_authorize", json.data);
 					onSuccess(json.data);
 				}
 				, function fetchError(...args) {
@@ -112,8 +119,36 @@ define("service.rest", ["service.account", "helper.settings"], function () {
 				}
 			);
 		},
-		user_register: function (fullname, email, onSuccess, onError) {
-			//
+		/**
+		 * @example
+		 * RAD.core.publish("service.rest.user_register", ["Anton Trofimenko", "rovius@mail.ru", "12345",]);
+		 */
+		user_register: function (fullname, email, password, onSuccess, onError) {
+			onSuccess || (onSuccess = function () {
+				console.info(arguments[0]);
+			});
+			onError || (onError = function () {
+				console.warn(arguments[0]);
+			});
+			let that = this;
+			this._fetch(
+				this._urlCompose("?path=user_register")
+				, function fetchSuccess(json) {
+					that.publish("service.account.user_register", json.data);
+					onSuccess(json.data);
+				}
+				, function fetchError(...args) {
+					onError(...args);
+				}
+				, {
+					method: "POST",
+					body: {
+						fullName: fullname,
+						email: email,
+						password: password,
+					},
+				}
+			);
 		},
 		quiz_list: function () {
 			//

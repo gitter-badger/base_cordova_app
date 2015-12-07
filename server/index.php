@@ -10,6 +10,7 @@ $api = [
 	"message" => "OK",
 	"status" => "success"
 ];
+$api["input"] = json_decode(file_get_contents("php://input"));
 switch ($path) {
 	case "index":
 		$api["data"] = [
@@ -18,6 +19,14 @@ switch ($path) {
 			"email"      => "at@mail.ru",
 			"session_id" => "djbncdslkjdnlfkjhlkdjhcdfklhjk",
 		];
+		break;
+	case "user_register":
+			$api["identity"] = "user_register";
+			$api["data"] = [
+				"fullName"    => "Anton Trofimenko",
+				"email"       => "at@mail.ru",
+				"accessToken" => "djbncdslkjdnlfkjhlkdjhcdfklhjk",
+			];
 		break;
 }
 //

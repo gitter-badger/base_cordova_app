@@ -1,0 +1,19 @@
+{
+	"title": "result",
+	"type": "object",
+	"properties": {
+		"userId": {
+			"type": "string"
+		},
+		"quizId": {
+			"type": "string"
+		},
+		"answers": {
+			"type": "object"
+		}
+	},
+	"required": [
+		"quizId",
+		"answers"
+	]
+}

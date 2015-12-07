@@ -1,0 +1,13 @@
+{
+	"codeName": "HMAC234MD",
+	"question": "Qustion text",
+	"answers": [
+		"1). answer correct",
+		"2). answer wrong",
+		"3). answer wrong",
+		"4). answer correct"
+	],
+	"answerMultiple": true,
+	"answerCorrect": [1, 4],
+	"score": 5
+}
