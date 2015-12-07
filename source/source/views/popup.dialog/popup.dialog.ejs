@@ -5,7 +5,7 @@
 			<div class="dialog-message">
 			   <span class="dialog-text">{{ model.message }}</span>
 			</div>
-{{# if ( _.size(model.button) > 2 || _.isPlainObject(model.button) ) { }}
+{{# if ( _.size(model.button) > 2 || _.isObject(model.button) ) { }}
 	{{# _.each( model.button, function (item, index) { }}
 		<span class="dialog-title dialog-title-full blank" data-set="{{ index }}">{{ item.title }}</span>
 	{{# }) }}

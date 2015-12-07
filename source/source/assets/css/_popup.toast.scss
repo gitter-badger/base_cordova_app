@@ -1,0 +1,114 @@
+@charset "utf-8";
+
+@import "mixins";
+
+$toastBorderWidth: 1px;
+$toastColorBad: rgb(221, 0, 0);
+$toastColorBlank: rgb(255, 255, 255);
+$toastColorNice: rgb(37, 159, 37);
+$toastColorWarn: rgb(255, 191, 65);
+$toastColorInfo: rgb(0, 121, 194);
+
+@mixin toastFill($color) {
+	color: $color;
+}
+
+@mixin toastIcon($size: 48px, $margin: 8px) {
+	@include size-min($size);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	margin: $margin;
+	padding: 0;
+}
+
+.toast {
+	min-width: 75% !important;
+}
+
+.toast.show {
+	opacity: 1;
+	z-index: 5000;
+}
+
+.toast-frame {
+	background-color: $toastColorBlank;
+	@include border($toastColorNice, $toastBorderWidth);
+	border-radius: 5px;
+	box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+	font-size: 15px;
+	line-height: 19px;
+	margin-left: 8%;
+	margin-right: 8%;
+	overflow: hidden;
+	padding: 1px;
+	text-align: center;
+	@include toastFill($toastColorNice);
+	z-index: 1001;
+}
+
+.toast-content {
+	border: 0 solid;
+	border-radius: 24px;
+	padding: 15px;
+}
+
+.toast-title {
+	color: $toastColorBlank;
+	font-size: 1.2em;
+	font-weight: bold;
+	padding: 5px;
+}
+
+.toast-title {
+	background-color: $toastColorNice;
+	@include toastFill($toastColorBlank);
+}
+
+.error.toast-frame {
+	@include border($toastColorBad, $toastBorderWidth);
+	@include toastFill($toastColorBad);
+}
+
+.error .toast-title {
+	@include toastFill($toastColorBlank);
+	background-color: $toastColorBad;
+}
+
+.warning.toast-frame {
+	@include border($toastColorWarn, $toastBorderWidth);
+	@include toastFill($toastColorWarn);
+}
+
+.warning .toast-title {
+	background-color: $toastColorWarn;
+	@include toastFill($toastColorBlank);
+}
+
+.info.toast-frame {
+	@include border($toastColorInfo, $toastBorderWidth);
+	@include toastFill($toastColorInfo);
+}
+
+.info .toast-title {
+	background-color: $toastColorInfo;
+	@include toastFill($toastColorBlank);
+}
+
+.toast-icon {
+	@include toastIcon();
+	background-image: url("../img/popup.toast/success_flat.png");
+	margin-bottom: 16px;
+}
+
+.error .toast-icon {
+	background-image: url("../img/popup.toast/error_flat.png");
+}
+
+.warning .toast-icon {
+	background-image: url("../img/popup.toast/warning_flat.png");
+}
+
+.info .toast-icon {
+	background-image: url("../img/popup.toast/info_flat.png");
+}

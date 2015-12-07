@@ -1,0 +1,167 @@
+@charset "utf-8";
+
+@import "mixins";
+@import "popup.toast";
+
+$toastBorderWidth: 2px;
+$toastColorBad: rgb(221, 0, 0);
+$toastColorBlank: rgb(255, 255, 255);
+$toastColorNice: rgb(37, 159, 37);
+$toastColorWarn: rgb(255, 191, 65);
+$toastColorInfo: rgb(0, 121, 194);
+
+@mixin dialogFill($color) {
+	color: $color;
+}
+
+@mixin dialogIcon($size: 48px, $margin: 8px) {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	margin: $margin;
+	@include size-min($size);
+	padding: 0;
+}
+
+.dialog {
+	min-width: 75% !important;
+}
+
+.dialog-message {
+	display: block;
+	margin-bottom: 15px;
+	width: 100%;
+}
+
+.dialog-text {
+	white-space: normal;
+}
+
+.dialog-frame {
+	@include border($toastColorNice, $toastBorderWidth);
+	@include dialogFill($toastColorNice);
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.dialog-content {
+	background-color: $toastColorBlank;
+	border-radius: 5px;
+	border: 0 solid;
+	padding: 15px;
+}
+
+.dialog-title {
+	border-radius: 8px;
+	border: 2px solid;
+	color: $toastColorBlank;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 100;
+	height: 33px;
+	line-height: 33px;
+	margin-bottom: 10px;
+	padding: 0;
+	text-align: center;
+	width: 45%;
+}
+
+.dialog-title-full {
+	display: block;
+	height: auto;
+	line-height: 32px;
+	white-space: pre-wrap;
+	width: 100%;
+}
+
+.dialog-title.blank {
+	@include dialogFill(black);
+	//@include toastFill($toastColorBlank);
+	background-color: $toastColorBlank;
+	border: 1px solid rgb(70, 69, 69);
+}
+
+.dialog-title:nth-child(odd):not(.blank) {
+	@include dialogFill(black);
+	//@include toastFill($toastColorBlank);
+	background-color: $toastColorBlank;
+	border: 1px solid rgb(70, 69, 69);
+}
+
+.dialog-title:nth-child(even):not(.blank) {
+	@include dialogFill($toastColorBlank);
+	//@include toastFill($toastColorBlank);
+	background-color: $toastColorNice;
+}
+
+.dialog-text {
+	display: block;
+}
+
+.info.dialog-frame {
+	@include border($toastColorInfo, $toastBorderWidth);
+	@include dialogFill($toastColorInfo);
+	//@include toastFill($toastColorInfo);
+}
+
+.info .dialog-title:nth-child(even):not(.blank) {
+	@include dialogFill($toastColorBlank);
+	//@include toastFill ($toastColorBlank);
+	background-color: $toastColorInfo;
+}
+
+.error.dialog-frame {
+	@include border($toastColorBad, $toastBorderWidth);
+	@include dialogFill($toastColorBad);
+	//@include toastFill($toastColorBad);
+}
+
+.error .dialog-title:nth-child(even):not(.blank) {
+	@include dialogFill($toastColorBlank);
+	//@include toastFill ($toastColorBlank);
+	background-color: $toastColorBad;
+}
+
+.warning.dialog-frame {
+	@include border ($toastColorWarn, $toastBorderWidth);
+	@include dialogFill($toastColorWarn);
+	//@include toastFill ($toastColorWarn);
+}
+
+.warning .dialog-title:nth-child(even):not(.blank) {
+	@include dialogFill($toastColorBlank);
+	//@include toastFill ($toastColorBlank);
+	background-color: $toastColorWarn;
+}
+
+.dialog-icon {
+	@include dialogIcon();
+	background-image: url("../img/popup.toast/info_flat.png");
+}
+
+.dialog-icon {
+	@include dialogIcon();
+	background-image: url("../img/popup.toast/success_flat.png");
+	margin-bottom: 16px;
+}
+
+.error .dialog-icon {
+	background-image: url("../img/popup.toast/error_flat.png");
+}
+
+.warning .dialog-icon {
+	background-image: url("../img/popup.toast/warning_flat.png");
+}
+
+.info .dialog-icon {
+	background-image: url("../img/popup.toast/info_flat.png");
+}
+
+.dialog-wrapper {
+	display: inline-block;
+	margin: 0 auto;
+	text-align: center;
+	vertical-align: middle;
+	width: 70%;
+}

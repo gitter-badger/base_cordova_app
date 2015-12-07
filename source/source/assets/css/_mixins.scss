@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+@mixin border($color: #00ff00, $width: 3px, $style: solid) {
+	border: $width $style $color;
+}
+
+@mixin size-min($size) {
+	min-height: $size;
+	min-width: $size;
+}

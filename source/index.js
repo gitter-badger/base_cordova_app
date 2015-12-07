@@ -14,7 +14,10 @@
 			widget: [
 				"spin",
 			],
-			dialog: [],
+			popup: [
+				"dialog",
+				"toast",
+			],
 		};
 		let models = {
 			collection: [
@@ -36,6 +39,7 @@
 				"fetch",
 				"storage",
 				"settings",
+				"translate",
 			]
 		};
 		for (let block in views) {
@@ -80,15 +84,16 @@
 		"jquery",
 		"fetch",
 		"json3",
+		"nprogress",
 		"types",
 		"webcomponents",
 		"underscore",
 	];
 	vendorNames.forEach(vendor => paths[vendor] = vendor + ".min");
 	let shim = {
+		"backbone.localStorage": {deps: ["backbone",],},
 		application: {deps: ["rad",],},
 		backbone: {deps: ["jquery", "underscore",], exports: "Backbone",},
-		"backbone.localStorage": {deps: ["backbone",],},
 		bootstrap: {deps: ["jquery",]},
 		cordova: {},
 		rad: {deps: ["backbone", "cordova", "iscroll",],},

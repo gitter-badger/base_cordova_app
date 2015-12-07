@@ -1,14 +1,23 @@
 "use strict";
-define("helper.translate", ["model.settings"], function () {
+define("helper.translate", ["helper.settings"], function () {
 	let translations = {
-		
+		"cancel": {
+			"en": "Cancel",
+			"ru": "Отмена",
+			"ua": "",
+		},
+		"ok": {
+			"en": "OK",
+			"ru": "Хорошо",
+			"ua": "",
+		},
 	};
 	function translate(text) {
 		if (text in translations === false) {
 			return text;
 		}
 		//
-		let language = RAD.model("settings").get("language");
+		let language = RAD.helper.settings.language;
 		if (language in translations[text] === false) {
 			return text;
 		}

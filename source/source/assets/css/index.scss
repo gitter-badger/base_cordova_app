@@ -1,19 +1,25 @@
 @charset "utf-8";
+@import "constants";
+@import "mixins";
 @import "rad";
 @import "transitions";
 @import "reset";
 @import "font";
-@import "constants";
+@import "popup.dialog";
 @import "widget.spinner";
 
 body {
-  //font-family: system, -apple-system, "Share Tech Mono", monospace;
-  font-family: system, -apple-system, monospace;
+	//font-family: system, -apple-system, "Share Tech Mono", monospace;
+	font-family: "Hack", monospace;
 }
 
 #screen_main > ul {
-  color: #fff;
-  background-color: $color-pink;
-  margin: 16px;
-  padding: 8px;
+	color: #fff;
+	background-color: $color-pink;
+	margin: 16px;
+	padding: 8px;
+}
+
+.toast {
+	top: 33% !important;
 }
