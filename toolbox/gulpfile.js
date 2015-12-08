@@ -316,8 +316,13 @@ var gulp = (function () {
 					"main": [
 						"dist/css/bootstrap.min.css",
 						"dist/js/bootstrap.min.js",
-					]
-				}
+					],
+				},
+				//"fast": {
+				//	"main": [
+				//		"dist/fast.min.js",
+				//	],
+				//}
 			}
 		});
 		//poly.push(cfg.folder.dest + cfg.folder.vendors + "*.html");

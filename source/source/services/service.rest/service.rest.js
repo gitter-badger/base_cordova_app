@@ -1,5 +1,5 @@
 "use strict";
-define("service.rest", ["service.account", "helper.settings"], function () {
+define("service.rest", ["service.account", "helper.settings", "fast"], function () {
 	/**
 	 * @class RAD.service.rest
 	 */
@@ -61,7 +61,9 @@ define("service.rest", ["service.account", "helper.settings"], function () {
 			if ("body" in options && _.isObject(options.body)) {
 				options.body = JSON3.stringify(options.body);
 			}
-			return _.extend(basic, options);
+			let opts = {};
+			fast.assign(opts, basic, options);
+			return opts;
 		},
 		/**
 		 * Compose fetch request
@@ -100,47 +102,52 @@ define("service.rest", ["service.account", "helper.settings"], function () {
 			}
 			return link;
 		},
-		user_authorize: function (login, password, onSuccess, onError) {
-			onSuccess || (onSuccess = function () {
-				console.info(arguments[0]);
-			});
-			onError || (onError = function () {
-				console.warn(arguments[0]);
-			});
-			let that = this;
+		_success: function (response) {
+			console.info(response);
+		},
+		_error: function (response) {
+			console.warn(response);
+		},
+		user_authorize: function (email, password, onSuccess = this._success, onError = this._error) {
 			this._fetch(
-				this._urlCompose("?path=user_authorize")
-				, function fetchSuccess(json) {
-					that.publish("service.account.user_authorize", json.data);
+				this._urlCompose("?path=user_authorize"),
+				function fetchSuccess(json) {
+					RAD.core.publish("service.account.user_authorize", json.data);
 					onSuccess(json.data);
-				}
-				, function fetchError(...args) {
+				},
+				function fetchError(...args) {
 					onError(...args);
+				},
+				{
+					method: "POST",
+					body: {
+						email: email,
+						password: password,
+					},
 				}
 			);
 		},
 		/**
+		 * Register user
+		 * @param {String} fullname
+		 * @param {String} email
+		 * @param {String} password
+		 * @param {Function=} onSuccess
+		 * @param {Function=} onError
 		 * @example
 		 * RAD.core.publish("service.rest.user_register", ["Anton Trofimenko", "rovius@mail.ru", "12345",]);
 		 */
-		user_register: function (fullname, email, password, onSuccess, onError) {
-			onSuccess || (onSuccess = function () {
-				console.info(arguments[0]);
-			});
-			onError || (onError = function () {
-				console.warn(arguments[0]);
-			});
-			let that = this;
+		user_register: function (fullname, email, password, onSuccess = this._success, onError = this._error) {
 			this._fetch(
-				this._urlCompose("?path=user_register")
-				, function fetchSuccess(json) {
-					that.publish("service.account.user_register", json.data);
+				this._urlCompose("?path=user_register"),
+				function fetchSuccess(json) {
+					RAD.core.publish("service.account.user_register", json.data);
 					onSuccess(json.data);
-				}
-				, function fetchError(...args) {
+				},
+				function fetchError(...args) {
 					onError(...args);
-				}
-				, {
+				},
+				{
 					method: "POST",
 					body: {
 						fullName: fullname,
@@ -150,14 +157,60 @@ define("service.rest", ["service.account", "helper.settings"], function () {
 				}
 			);
 		},
-		quiz_list: function () {
-			//
+		/**
+		 * @example RAD.core.publish("service.rest.quiz_list");
+		 */
+		quiz_list: function (onSuccess = this._success, onError = this._error) {
+			this._fetch(
+				this._urlCompose("?path=quiz_list"),
+				function fetchSuccess(json) {
+					onSuccess(json.data);
+				},
+				function fetchError(...args) {
+					onError(...args);
+				}
+			);
 		},
-		quiz_start: function () {
-			//
+		quiz_start: function (quizId, onSuccess = this._success, onError = this._error) {
+			this._fetch(
+				this._urlCompose("?path=quiz_start"),
+				function fetchSuccess(json) {
+					onSuccess(json.data);
+				},
+				function fetchError(...args) {
+					onError(...args);
+				},
+				{
+					method: "POST",
+					body: {
+						quizId: quizId,
+					}
+				}
+			);
 		},
-		answer_send: function () {
-			//
+		/**
+		 * @param {String} questionId
+		 * @param {String|String[]} resultIds
+		 * @param {Function=} onSuccess
+		 * @param {Function=} onError
+		 */
+		answer_send: function (questionId, resultIds, onSuccess = this._success, onError = this._error) {
+			this._fetch(
+				this._urlCompose("?path=answer_send"),
+				function fetchSuccess(json) {
+					onSuccess(json.data);
+				},
+				function fetchError(...args) {
+					onError(...args);
+				},
+				{
+					method: "POST",
+					body: {
+						questionId: questionId,
+						answerIds: resultIds,
+					}
+				}
+			);
 		},
 	}));
 });

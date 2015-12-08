@@ -2,7 +2,7 @@
 	"title": "question",
 	"type": "object",
 	"properties": {
-		"codeName": {
+		"answerId": {
 			"type": "string"
 		},
 		"question": {
@@ -22,7 +22,7 @@
 		}
 	},
 	"required": [
-		"codeName",
+		"answerId",
 		"answers",
 		"answerMultiple",
 		"answerCorrect",

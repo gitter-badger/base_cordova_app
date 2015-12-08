@@ -23,7 +23,8 @@
     "requirejs": "~2.1.*",
     "types.js": "~1.4.*",
     "moment": "~2.10.6",
-    "nprogress": "~0.2.0"
+    "nprogress": "~0.2.0",
+    "fast.js": "~0.1.1"
   },
   "devDependencies": {},
   "overrides": {

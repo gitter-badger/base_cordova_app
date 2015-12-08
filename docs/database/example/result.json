@@ -2,8 +2,25 @@
 	"userId": "cwe5ty47cn8597cn4",
 	"quizId": "c9y45vc7nj489vy",
 	"answers": {
-		"c8t757y48y9j48": [1, 4],
-		"c498yu4cj598y98y7": 1,
-		"kv49cfy58u44895": [3]
+		"c8t757y48y9j48": {
+			"result": [
+				1,
+				4
+			],
+			"timeStart": 654654,
+			"timeEnd": 654654
+		},
+		"c498yu4cj598y98y7": {
+			"result": 1,
+			"timeStart": 654654,
+			"timeEnd": 654654
+		},
+		"kv49cfy58u44895": {
+			"result": [
+				3
+			],
+			"timeStart": 654654,
+			"timeEnd": 654654
+		}
 	}
 }

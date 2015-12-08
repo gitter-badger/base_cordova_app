@@ -1,8 +1,10 @@
 {
-	"nameOfQuiz": "Name of Quiz",
+	"quizId": "SIC4378NX8374XBN3O7",
+	"name": "Name of Quiz",
 	"questions": [
-		"id1",
-		"id2",
-		"id3"
-	]
+		"answerId_000001",
+		"answerId_000002",
+		"answerId_000003"
+	],
+	"points": 5
 }

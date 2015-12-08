@@ -1,5 +1,7 @@
+/server/vendor
 /toolbox/npm-debug.log
 !.gitignore
+/server/composer.lock
 .idea/
 nbproject/
 .DS_Store

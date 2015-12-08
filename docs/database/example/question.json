@@ -1,5 +1,5 @@
 {
-	"codeName": "HMAC234MD",
+	"questionId": "HMAC234MD",
 	"question": "Qustion text",
 	"answers": [
 		"1). answer correct",
@@ -9,5 +9,5 @@
 	],
 	"answerMultiple": true,
 	"answerCorrect": [1, 4],
-	"score": 5
+	"points": 5
 }

@@ -79,24 +79,26 @@
 		"backbone.localStorage",
 		"bootstrap",
 		"core",
+		"fast",
+		"fetch",
 		"immutable",
 		"iscroll",
 		"jquery",
-		"fetch",
 		"json3",
 		"nprogress",
 		"types",
-		"webcomponents",
 		"underscore",
+		"webcomponents",
 	];
 	vendorNames.forEach(vendor => paths[vendor] = vendor + ".min");
 	let shim = {
 		"backbone.localStorage": {deps: ["backbone",],},
-		application: {deps: ["rad",],},
-		backbone: {deps: ["jquery", "underscore",], exports: "Backbone",},
-		bootstrap: {deps: ["jquery",]},
-		cordova: {},
-		rad: {deps: ["backbone", "cordova", "iscroll",],},
+		"application": {deps: ["rad", "async",],},
+		"backbone": {deps: ["jquery", "underscore",], exports: "Backbone",},
+		"bootstrap": {deps: ["jquery",]},
+		"cordova": {deps: [],},
+		"rad": {deps: ["backbone", "cordova", "iscroll",],},
+		"underscore": {exports: "_",},
 	};
 	shim.cordova.deps = vendorNames;
 	/**
@@ -148,14 +150,32 @@
 		document.getElementsByTagName("head")[0].appendChild(link);
 	}
 
+	let arrPath = Object.keys(paths);
 	loadScript("vendors/require.min.js", function () {
 		requirejs.config({
 			baseUrl: "vendors",
+			enforceDefine: false,
 			paths: paths,
 			shim: shim,
-			waitSeconds: 5e3
+			waitSeconds: 2e3,
 		});
-		require(["rad"], function () {
+		require(arrPath, function () {
+			Array
+				.from(arguments)
+				.forEach(function (module, index) {
+					if (!module) {
+						return;
+					}
+					let name = arrPath[index];
+					if (window[name]) {
+						return;
+					}
+					if ((name in shim) && ("exports" in shim[name])) {
+						window[shim[name]["exports"]] = module;
+					} else {
+						window[name] = module;
+					}
+				});
 				//loadHTML([
 				//	"polymer",
 				//	"paper-button",
@@ -170,6 +190,7 @@
 				});
 				requirejs.config({
 					baseUrl: "",
+					enforceDefine: true,
 					paths: include,
 					shim: {}
 				});
