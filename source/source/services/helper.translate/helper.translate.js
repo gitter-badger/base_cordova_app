@@ -27,4 +27,5 @@ define("helper.translate", ["helper.settings"], function () {
 	 * @class RAD.helper.translate
 	 */
 	RAD.namespace("helper.translate", translate);
+	window.__ = translate;
 });

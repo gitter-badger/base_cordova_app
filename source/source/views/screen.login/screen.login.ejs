@@ -1,0 +1,39 @@
+<section>
+	<form>
+		<div>
+			<input
+				autocapitalize="off"
+				autocomplete="off"
+				autocorrect="off"
+				data-template="true"
+				id="login-singnin-email"
+				onfocus="this.removeAttribute('readonly');"
+				placeholder="{{ __('Email') }}"
+				readonly="readonly"
+				spellcheck="false"
+				type="email"
+				value="{{ model.email }}"
+			>
+			<span class="login-email"></span>
+		</div>
+		<div>
+			<input
+				autocapitalize="off"
+				autocomplete="off"
+				autocorrect="off"
+				data-template="true"
+				id="login-singnin-password"
+				placeholder="{{ __('Password') }}"
+				spellcheck="false"
+				type="password"
+				value="{{ model.password }}"
+			>
+		</div>
+		<div>
+			<button
+				id="login-singnin-submit"
+				type="button"
+			>{{ __('Login') }}</button>
+		</div>
+	</form>
+</section>

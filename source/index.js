@@ -9,7 +9,9 @@
 		let views = {
 			screen: [
 				"auth",
+				"basic",
 				"home",
+				"login",
 			],
 			widget: [
 				"spin",
@@ -59,8 +61,8 @@
 			coreOptions = {
 				defaultBackstack: false,
 				defaultAnimation: "none",
-				animationTimeout: 3000,
-				debug: false
+				animationTimeout: 1,
+				debug: false,
 			};
 		//initialize core by new application object
 		core.initialize(application, coreOptions);
@@ -92,9 +94,9 @@
 	];
 	vendorNames.forEach(vendor => paths[vendor] = vendor + ".min");
 	let shim = {
-		"backbone.localStorage": {deps: ["backbone",],},
 		"application": {deps: ["rad", "async",],},
 		"backbone": {deps: ["jquery", "underscore",], exports: "Backbone",},
+		"backbone.localStorage": {deps: ["backbone",],},
 		"bootstrap": {deps: ["jquery",]},
 		"cordova": {deps: [],},
 		"rad": {deps: ["backbone", "cordova", "iscroll",],},
@@ -152,6 +154,9 @@
 
 	let arrPath = Object.keys(paths);
 	loadScript("vendors/require.min.js", function () {
+
+		console.info("load vendors");
+
 		requirejs.config({
 			baseUrl: "vendors",
 			enforceDefine: false,
@@ -160,6 +165,9 @@
 			waitSeconds: 2e3,
 		});
 		require(arrPath, function () {
+
+			console.info("register vendors");
+
 			Array
 				.from(arguments)
 				.forEach(function (module, index) {
@@ -194,9 +202,12 @@
 					paths: include,
 					shim: {}
 				});
-				require(Object.keys(include), () =>
-					window.RAD.scriptLoader.loadScripts([applicationjs], onEndLoad)
-				);
+				require(Object.keys(include), function () {
+
+					console.info("load scripts");
+
+					window.RAD.scriptLoader.loadScripts([applicationjs], onEndLoad);
+				});
 			}
 		);
 	});

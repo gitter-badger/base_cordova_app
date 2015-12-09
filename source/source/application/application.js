@@ -10,17 +10,18 @@ define("application", [], function () {
 					core.publish("navigation.show", {
 						container_id: "#screen",
 						content: "screen.home",
-						animation: "none"
+						animation: "none",
 					});
 				} else {
 					core.publish("navigation.show", {
 						container_id: "#screen",
-						content: "screen.home",
-						animation: "none"
+						content: "screen.login",
+						animation: "none",
 					});
 				}
 			}
-			if (window["_cordovaNative"]) {
+
+			if (window["cordova"]) {
 				document.addEventListener("deviceready", onDeviceReady, false);
 			} else {
 				onDeviceReady();
@@ -29,4 +30,3 @@ define("application", [], function () {
 		return app;
 	}, true);
 });
-
