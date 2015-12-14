@@ -1,39 +1,89 @@
 <section>
 	<form>
-		<div>
+		<fieldset>
 			<input
 				autocapitalize="off"
 				autocomplete="off"
 				autocorrect="off"
 				data-template="true"
-				id="login-singnin-email"
+				id="login_signin_email"
 				onfocus="this.removeAttribute('readonly');"
-				placeholder="{{ __('Email') }}"
+				placeholder="{{ __('email') }}"
 				readonly="readonly"
 				spellcheck="false"
 				type="email"
-				value="{{ model.email }}"
+				value="{{ model.login_signin_email }}"
 			>
-			<span class="login-email"></span>
-		</div>
-		<div>
+		</fieldset>
+		<fieldset>
 			<input
 				autocapitalize="off"
 				autocomplete="off"
 				autocorrect="off"
 				data-template="true"
-				id="login-singnin-password"
-				placeholder="{{ __('Password') }}"
+				id="login_signin_password"
+				placeholder="{{ __('password') }}"
 				spellcheck="false"
 				type="password"
-				value="{{ model.password }}"
+				value="{{ model.login_signin_password }}"
 			>
-		</div>
-		<div>
+		</fieldset>
+		<fieldset>
 			<button
-				id="login-singnin-submit"
+				id="login_signin_submit"
 				type="button"
-			>{{ __('Login') }}</button>
-		</div>
+			>{{ __('sign in') }}</button>
+		</fieldset>
+	</form>
+	<form>
+		<fieldset>
+			<input
+				autocapitalize="off"
+				autocomplete="off"
+				autocorrect="off"
+				data-template="true"
+				id="login_signup_fullname"
+				onfocus="this.removeAttribute('readonly');"
+				placeholder="{{ __('fullname') }}"
+				readonly="readonly"
+				spellcheck="false"
+				type="email"
+				value="{{ model.login_signup_fullname }}"
+			>
+		</fieldset>
+		<fieldset>
+			<input
+				autocapitalize="off"
+				autocomplete="off"
+				autocorrect="off"
+				data-template="true"
+				id="login_signup_email"
+				onfocus="this.removeAttribute('readonly');"
+				placeholder="{{ __('email') }}"
+				readonly="readonly"
+				spellcheck="false"
+				type="email"
+				value="{{ model.login_signup_email }}"
+			>
+		</fieldset>
+		<fieldset>
+			<input
+				autocapitalize="off"
+				autocomplete="off"
+				autocorrect="off"
+				data-template="true"
+				id="login_signup_password"
+				placeholder="{{ __('password') }}"
+				spellcheck="false"
+				type="password"
+				value="{{ model.login_signup_password }}"
+			>
+		</fieldset>
+		<fieldset>
+			<button
+				id="login_signup_submit"
+				type="button"
+			>{{ __('sign up') }}</button>
+		</fieldset>
 	</form>
 </section>

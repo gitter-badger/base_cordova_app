@@ -89,6 +89,7 @@
 		"json3",
 		"localforage",
 		"nprogress",
+		"string",
 		"types",
 		"underscore",
 		"webcomponents",
@@ -101,6 +102,7 @@
 		"bootstrap": {deps: ["jquery",]},
 		"cordova": {deps: [],},
 		"rad": {deps: ["backbone", "cordova", "iscroll",],},
+		"string": {exports: "S",},
 		"underscore": {exports: "_",},
 	};
 	shim.cordova.deps = vendorNames;
