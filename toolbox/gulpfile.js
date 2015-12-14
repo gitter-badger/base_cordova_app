@@ -4,7 +4,6 @@ var gulp = (function () {
 	////////////////////
 	// Node modules
 	////////////////////
-
 	/** Load modules */
 	var babel_polyfill = require("babel-polyfill");
 	var del = require("del");
@@ -35,11 +34,9 @@ var gulp = (function () {
 	var rimraf = require("rimraf");
 	var run_sequence = require("run-sequence");
 	var vars = require("./vars.json");
-
 	////////////////////
 	// Configuration
 	////////////////////
-
 	var cfg = (function () {
 		var config = {};
 		var folder = {
@@ -47,6 +44,7 @@ var gulp = (function () {
 			dest: "./../cordova/www",
 			font: "/source/assets/font/",
 			images: "/source/assets/img/",
+			icons: "/source/assets/icon/",
 			js: "/",
 			source: "../source",
 			vendors: "/vendors/"
@@ -60,6 +58,9 @@ var gulp = (function () {
 			],
 			images: [
 				folder.source + folder.images + "**/*"
+			],
+			icons: [
+				folder.source + folder.icons + "**/*"
 			],
 			html: [
 				folder.source + "/**/*.html",
@@ -112,6 +113,7 @@ var gulp = (function () {
 			html: folder.dest + "/",
 			ejs: folder.dest + "/",
 			images: folder.dest + folder.images,
+			icons: folder.dest + folder.icons,
 			js: folder.dest + folder.js,
 			js_vendors: folder.dest + folder.vendors
 		};
@@ -151,7 +153,7 @@ var gulp = (function () {
 			sass: {
 				paths: [path.join(__dirname, "sass", "includes")],
 				plugins: []
-			},myth: {
+			}, myth: {
 				browsers: [
 					"Android 4",
 					"Edge 12",
@@ -196,8 +198,7 @@ var gulp = (function () {
 		};
 		config.folder = folder;
 		return config;
-	} ());
-
+	}());
 	////////////////////
 	// Gulp Actions
 	////////////////////
@@ -205,10 +206,11 @@ var gulp = (function () {
 	 * If there are errors, the findings and continue
 	 * @param {Object} error
 	 */
-	function swallowError (error) {
+	function swallowError(error) {
 		console.log(error.toString());
 		this.emit("end");
 	}
+
 	/** Clear compiled folder */
 	gulp.task("clean", (callback) => {
 		del(cfg.src.clean, {force: true}).then(() => callback());
@@ -342,7 +344,7 @@ var gulp = (function () {
 				path.basename += ".min";
 			}))
 			.pipe(gulp.dest(cfg.dest.js_vendors)
-		);
+			);
 	});
 	/** Remove unneccesary vendor files */
 	gulp.task("js_vendors_clean", ["js_vendors_min"], callback => {
@@ -351,15 +353,22 @@ var gulp = (function () {
 	/** Copy vendor libraries to destination folder */
 	gulp.task("js_lib", gulp_sequence("js_vendors", "js_vendors_min", "js_vendors_clean"));
 	/** Copy and minimize image */
-	gulp.task("images", function () {
+	gulp.task("images", ["icons"], function () {
 		return gulp
 			.src(cfg.src.images)
 			//.pipe(gulp_cache(gulp_imagemin(cfg.task.imagemin)))
 			.pipe(gulp.dest(cfg.dest.images))
 			.pipe(gulp_connect.reload());
 	});
+	gulp.task("icons", function () {
+		return gulp
+			.src(cfg.src.icons)
+			//.pipe(gulp_cache(gulp_imagemin(cfg.task.icons)))
+			.pipe(gulp.dest(cfg.dest.icons))
+			.pipe(gulp_connect.reload());
+	});
 	/** Watch for file changes */
-	gulp.task("watch", ["compile_debug"], function() {
+	gulp.task("watch", ["compile_debug"], function () {
 		gulp_watch(cfg.src.font, () => gulp.start("font"));
 		gulp_watch(cfg.src.html, () => gulp.start("html"));
 		gulp_watch(cfg.src.ejs, () => gulp.start("ejs"));

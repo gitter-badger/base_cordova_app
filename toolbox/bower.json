@@ -1,57 +1,58 @@
 {
-  "name": "BaseCordovaExample",
-  "private": true,
-  "version": "1.0.0",
-  "description": "Basic skeleton for Cordova application",
-  "authors": [
-    "Anton Trofimenko <p54l0m5h1k@gmail.com>"
-  ],
-  "license": "MIT",
-  "dependencies": {
-    "async": "~1.5.0",
-    "backbone": "~1.2.*",
-    "backbone.localStorage": "~1.1.16",
-    "bootstrap": "4.0.0-alpha",
-    "core.js": "~1.2.*",
-    "fast.js": "~0.1.1",
-    "fetch": "~0.10.1",
-    "immutable": "~3.7.*",
-    "iscroll": "~4.*",
-    "jquery": "~3.*",
-    "json3": "~3.3.*",
-    "moment": "~2.10.6",
-    "nprogress": "~0.2.0",
-    "paper-button": "PolymerElements/paper-button#~1.0.8",
-    "polymer": "Polymer/polymer#^1.2.*",
-    "requirejs": "~2.1.*",
-    "types.js": "~1.4.*"
-  },
-  "devDependencies": {},
-  "overrides": {
-    "immutable": {
-      "main": "dist/immutable.min.js"
-    },
-    "is_js": {
-      "main": "is.min.js"
-    },
-    "jquery": {
-      "main": [
-        "dist/jquery.min.js",
-        "dist/jquery.min.map"
-      ]
-    },
-    "lodash": {
-      "main": "lodash.min.js"
-    },
-    "types.js": {
-      "main": "types.min.js"
-    }
-  },
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "vendors",
-    "test",
-    "tests"
-  ]
+	"authors": [
+		"Anton Trofimenko <p54l0m5h1k@gmail.com>"
+	],
+	"dependencies": {
+		"async": "~1.5.0",
+		"backbone": "~1.2.*",
+		"backbone.localStorage": "~1.1.16",
+		"bootstrap": "4.0.0-alpha",
+		"core.js": "~1.2.*",
+		"fast.js": "~0.1.1",
+		"fetch": "~0.10.1",
+		"immutable": "~3.7.*",
+		"iscroll": "~4.*",
+		"jquery": "~3.*",
+		"json3": "~3.3.*",
+		"localforage": "~1.3.1",
+		"moment": "~2.10.6",
+		"nprogress": "~0.2.0",
+		"paper-button": "PolymerElements/paper-button#~1.0.8",
+		"polymer": "Polymer/polymer#^1.2.*",
+		"requirejs": "~2.1.*",
+		"types.js": "~1.4.*"
+	},
+	"description": "Basic skeleton for Cordova application",
+	"devDependencies": [],
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"vendors",
+		"test",
+		"tests"
+	],
+	"license": "MIT",
+	"name": "BaseCordovaExample",
+	"overrides": {
+		"immutable": {
+			"main": "dist/immutable.min.js"
+		},
+		"is_js": {
+			"main": "is.min.js"
+		},
+		"jquery": {
+			"main": [
+				"dist/jquery.min.js",
+				"dist/jquery.min.map"
+			]
+		},
+		"lodash": {
+			"main": "lodash.min.js"
+		},
+		"types.js": {
+			"main": "types.min.js"
+		}
+	},
+	"private": true,
+	"version": "1.0.0"
 }

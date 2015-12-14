@@ -87,6 +87,7 @@
 		"iscroll",
 		"jquery",
 		"json3",
+		"localforage",
 		"nprogress",
 		"types",
 		"underscore",
@@ -154,9 +155,6 @@
 
 	let arrPath = Object.keys(paths);
 	loadScript("vendors/require.min.js", function () {
-
-		console.info("load vendors");
-
 		requirejs.config({
 			baseUrl: "vendors",
 			enforceDefine: false,
@@ -165,25 +163,22 @@
 			waitSeconds: 2e3,
 		});
 		require(arrPath, function () {
-
-			console.info("register vendors");
-
-			Array
-				.from(arguments)
-				.forEach(function (module, index) {
-					if (!module) {
-						return;
-					}
-					let name = arrPath[index];
-					if (window[name]) {
-						return;
-					}
-					if ((name in shim) && ("exports" in shim[name])) {
-						window[shim[name]["exports"]] = module;
-					} else {
-						window[name] = module;
-					}
-				});
+				Array
+					.from(arguments)
+					.forEach(function (module, index) {
+						if (!module) {
+							return;
+						}
+						let name = arrPath[index];
+						if (window[name]) {
+							return;
+						}
+						if ((name in shim) && ("exports" in shim[name])) {
+							window[shim[name]["exports"]] = module;
+						} else {
+							window[name] = module;
+						}
+					});
 				//loadHTML([
 				//	"polymer",
 				//	"paper-button",
@@ -203,9 +198,6 @@
 					shim: {}
 				});
 				require(Object.keys(include), function () {
-
-					console.info("load scripts");
-
 					window.RAD.scriptLoader.loadScripts([applicationjs], onEndLoad);
 				});
 			}
