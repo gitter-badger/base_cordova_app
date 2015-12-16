@@ -8,19 +8,34 @@ define("screen.login", ["model.account", "screen.basic"], function () {
 			"login_signup_email": "",
 			"login_signup_password": "",
 		},
-		validate: function () {
-			if (!this.get("login_signin_email") && !this.get("login_signup_email")) {
-				return __("please fill email field");
-			}
-			if (!this.get("login_signin_password") && !this.get("login_signup_password")) {
-				return __("please fill password field");
-			}
-			if (this.get("login_signup_password") && this.get("login_signup_email")) {
-				let rName = [/^[a-zA-Z_@.!#$%&'*]{1,30}$/, /[.*]{1,255}/][1];
-				if (!rName.test(this.get("login_signup_fullname"))) {
-					return __("please fill name field");
+		validate: function (attrs, options) {
+			if (options.signin) {
+				if (!attrs.login_signin_email) {
+					return __("please fill email field");
+				}
+				if (!RAD.helper.util.validate.email(attrs.login_signin_email)) {
+					return __("email field is incorrect");
+				}
+				if (!attrs.login_signin_password) {
+					return __("please fill password field");
 				}
 			}
+			if (options.signup) {
+				if (!attrs.login_signup_email) {
+					return __("please fill email field");
+				}
+				if (!RAD.helper.util.validate.email(attrs.login_signup_email)) {
+					return __("email field is incorrect");
+				}
+				if (!attrs.login_signup_password) {
+					return __("please fill password field");
+				}
+				attrs.login_signup_fullname = attrs.login_signup_fullname.trim();
+				if (!RAD.helper.util.validate.fullName(attrs.login_signup_fullname)) {
+					return __("please fill full name field");
+				}
+			}
+			//
 		}
 	}), true);
 	/**
@@ -36,12 +51,12 @@ define("screen.login", ["model.account", "screen.basic"], function () {
 		events: {
 			"keyup #login_signin_email":    "eventKeyUp",
 			"keyup #login_signin_password": "eventKeyUp",
-			"tap   #login_signin_submit":   "eventTapSingninSubmit",
+			"tap   #login_signin_submit":   "eventTapSigninSubmit",
 			//
 			"keyup #login_signup_fullname": "eventKeyUp",
 			"keyup #login_signup_email":    "eventKeyUp",
 			"keyup #login_signup_password": "eventKeyUp",
-			"tap   #login_signup_submit":   "eventTapSingupSubmit",
+			"tap   #login_signup_submit":   "eventTapSignupSubmit",
 			//
 			"input          #login_signin_email":    "eventInputSigninEmail",
 			"propertychange #login_signin_email":    "eventInputSigninEmail",
@@ -58,8 +73,20 @@ define("screen.login", ["model.account", "screen.basic"], function () {
 		onStartAttach: function () {
 			this.model.trigger("change");
 		},
-		eventInputEmail: function (event) {
-			RAD.screen.basic.onInput.call(this, "email", event);
+		eventInputSigninEmail: function (event) {
+			RAD.screen.basic.onInput.call(this, "login_signin_email", event);
+		},
+		eventInputSigninPassword: function (event) {
+			RAD.screen.basic.onInput.call(this, "login_signin_password", event);
+		},
+		eventInputSignupFullname: function(event) {
+			RAD.screen.basic.onInput.call(this, "login_signup_fullname", event);
+		},
+		eventInputSignupEmail: function (event) {
+			RAD.screen.basic.onInput.call(this, "login_signup_email", event);
+		},
+		eventInputSignupPassword: function (event) {
+			RAD.screen.basic.onInput.call(this, "login_signup_password", event);
 		},
 		_jumpToElement: function (query) {
 			this.$(query).trigger("tap").focus();
@@ -69,10 +96,10 @@ define("screen.login", ["model.account", "screen.basic"], function () {
 				case 13:
 					// Enter
 					let jumpFromTo = {
-						"login_signin_email": "#login_signin_password",
+						"login_signin_email":    "#login_signin_password",
 						"login_signin_password": "#login_signin_submit",
 						"login_signup_fullname": "#login_signup_email",
-						"login_signup_email": "#login_signup_password",
+						"login_signup_email":    "#login_signup_password",
 						"login_signup_password": "#login_signup_submit",
 					};
 					if (Object.keys(jumpFromTo).includes(event.currentTarget.id)) {
@@ -84,9 +111,28 @@ define("screen.login", ["model.account", "screen.basic"], function () {
 					break;
 			}
 		},
-		eventTapSingninSubmit: function () {
-			console.info("eventTapSingninSubmit");
-			if (this.model.isValid()) {
+		eventTapSigninSubmit: function () {
+			console.info("eventTapSigninSubmit");
+			if (this.model.isValid({signin: true})) {
+				let auth = [
+					this.model.get("login_signin_email"),
+					this.model.get("login_signin_password"),
+					function () {
+						console.dir(arguments);
+					},
+					function (error) {
+						// TypeError: Failed to fetch
+						//RAD.popup.toast("", error, "error");
+					}
+				];
+				RAD.core.publish("service.rest.user_authorize", auth);
+			} else {
+				RAD.popup.toast("", this.model.validationError, "warning");
+			}
+		},
+		eventTapSignupSubmit: function () {
+			console.info("eventTapSignupSubmit");
+			if (this.model.isValid({signup: true})) {
 				console.info("Valid");
 				//RAD.application.login(this.model.get("email"), this.model.get("password"));
 			} else {
@@ -95,4 +141,3 @@ define("screen.login", ["model.account", "screen.basic"], function () {
 		}
 	}));
 });
-

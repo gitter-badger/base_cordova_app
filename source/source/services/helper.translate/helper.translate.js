@@ -1,6 +1,11 @@
 "use strict";
 define("helper.translate", ["helper.settings", "string"], function () {
 	let translations = {
+		"": {
+			"en": "",
+			"ru": "",
+			"ua": "",
+		},
 		"cancel": {
 			"en": "cancel",
 			"ru": "отмена",
@@ -35,6 +40,26 @@ define("helper.translate", ["helper.settings", "string"], function () {
 			"en": "full name",
 			"ru": "полное имя",
 			"ua": "повне ім'я",
+		},
+		"please fill email field": {
+			"en": "please fill email field",
+			"ru": "пожалуйста, заполните поле email",
+			"ua": "будь ласка, заповніть поле email",
+		},
+		"please fill password field": {
+			"en": "please fill password field",
+			"ru": "пожалуйста, заполните поле пароля",
+			"ua": "будь ласка, заповніть поле пароля",
+		},
+		"please fill full name field": {
+			"en": "please fill full name field",
+			"ru": "пожалуйста, укажите ваше полное имя",
+			"ua": "будь ласка, вкажіть ваше повне ім'я",
+		},
+		"email field is incorrect": {
+			"en": "email field is incorrect",
+			"ru": "введен некорректный email",
+			"ua": "введений некоректний email",
 		},
 	};
 

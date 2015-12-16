@@ -21,5 +21,23 @@ define("widget.spin", ["backbone"], function () {
 		onCloseDestroy: true,
 		outSideClose: false,
 	}));
+	RAD.namespace("widget.spin", {
+		show: function () {
+			RAD.core.publish("navigation.dialog.show", {
+				content: "widget.spin",
+				gravity: "center",
+				target: "#screen",
+				extras: {},
+			})
+		},
+		hide: function () {
+			RAD.core.publish("navigation.dialog.close", {
+				content: "widget.spin",
+				gravity: "center",
+				target: "#screen",
+				extras: {},
+			});
+		}
+	});
 });
 

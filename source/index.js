@@ -37,12 +37,12 @@
 				"rest",
 			],
 			helper: [
-				"convert",
 				"fetch",
 				"storage",
 				"settings",
 				"translate",
-			]
+				"util",
+			],
 		};
 		for (let block in views) {
 			views[block].forEach(name => scripts.push(`source/views/${block}.${name}/${block}.${name}.js`));
@@ -78,6 +78,7 @@
 	let vendorNames = [
 		"async",
 		"backbone",
+		"backbone-validation",
 		"backbone.localStorage",
 		"bootstrap",
 		"core",
@@ -99,6 +100,7 @@
 		"application": {deps: ["rad", "async",],},
 		"backbone": {deps: ["jquery", "underscore",], exports: "Backbone",},
 		"backbone.localStorage": {deps: ["backbone",],},
+		"backbone-validation": {deps: ["backbone", "underscore",],},
 		"bootstrap": {deps: ["jquery",]},
 		"cordova": {deps: [],},
 		"rad": {deps: ["backbone", "cordova", "iscroll",],},

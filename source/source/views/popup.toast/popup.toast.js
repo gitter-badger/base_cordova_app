@@ -14,19 +14,16 @@ define("popup.toast", ["backbone"], function () {
 		},
 		startOver: false,
 		onTap: function () {
-			console.info("TAP");
 			this.onClosing();
 			return false; // Stop framework closing on tap
 		},
 		onClosing: function () {
-			console.dir("onClosing");
 			setTimeout(this._close.bind(this), 1);
 		},
 		/**
 		 * @private
 		 */
 		_close: function () {
-			console.info(this.viewID);
 			this.publish("navigation.dialog.close", {
 				content: this.viewID,
 			});
@@ -93,7 +90,7 @@ define("popup.toast", ["backbone"], function () {
 			if (title) {
 				title.trim();
 			}
-			ttl = 1000;
+			ttl = 3000;
 			if (!["error", "message", "warning", "info"].includes(type)) {
 				type = "message";
 			}
