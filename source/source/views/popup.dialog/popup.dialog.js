@@ -1,5 +1,9 @@
 "use strict";
-define("popup.dialog", ["backbone", "helper.translate", "underscore"], function () {
+define("popup.dialog", [
+	"backbone",
+	"helper.translate",
+	"underscore",
+], function () {
 	/**
 	 * @class RAD.popup.dialog
 	 */

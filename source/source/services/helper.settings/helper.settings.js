@@ -12,7 +12,7 @@ define("helper.settings", [], function () {
 			/**
 			 * @type {Number}
 			 */
-			timeout: 60e3,
+			timeout: 5e3,
 		},
 		/**
 		 * @type {String}

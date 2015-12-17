@@ -1,5 +1,5 @@
 "use strict";
-define("model.account", ["backbone.localStorage"], function () {
+define("model.account", ["backbone.localStorage",], function () {
 	let localModel = new Backbone.LocalStorage("model.account");
 	let ModelAccount = Backbone.Model.extend({
 		localStorage: localModel,

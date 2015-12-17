@@ -1,5 +1,5 @@
 "use strict";
-define("widget.spin", ["backbone"], function () {
+define("widget.spin", ["backbone",], function () {
 	/**
 	 * @class RAD.view.widget.spin
 	 * @example
@@ -20,6 +20,13 @@ define("widget.spin", ["backbone"], function () {
 		url: "source/views/widget.spin/widget.spin.ejs",
 		onCloseDestroy: true,
 		outSideClose: false,
+		onInitialize: function () {
+			this.subscribe("navigation.back", this.onNavigationLeave);
+			this.subscribe("navigation.show", this.onNavigationLeave);
+		},
+		onNavigationLeave: function () {
+			RAD.widget.spin.hide();
+		},
 	}));
 	RAD.namespace("widget.spin", {
 		show: function () {
@@ -28,7 +35,7 @@ define("widget.spin", ["backbone"], function () {
 				gravity: "center",
 				target: "#screen",
 				extras: {},
-			})
+			});
 		},
 		hide: function () {
 			RAD.core.publish("navigation.dialog.close", {

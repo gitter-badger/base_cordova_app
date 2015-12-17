@@ -1,5 +1,9 @@
 "use strict";
-define("service.rest", ["service.account", "helper.settings", "fast"], function () {
+define("service.rest", [
+	"fast",
+	"helper.settings",
+	"service.account",
+], function () {
 	/**
 	 * @class RAD.service.rest
 	 */
@@ -74,7 +78,11 @@ define("service.rest", ["service.account", "helper.settings", "fast"], function 
 		 * @param {Number=} timeoutInMs
 		 * @private
 		 */
-		_fetch: function (url, onSuccess, onError, requrestOptions = {}, timeoutInMs = 60e3) {
+		_fetch: function (url
+			, onSuccess
+			, onError
+			, requrestOptions = {}
+			, timeoutInMs = RAD.helper.settings.server.timeout) {
 			let request = new Request(url, this._fetchOptions(requrestOptions));
 			var Fetch = RAD.helper.fetch;
 			Promise.race([Fetch.timeoutPromise(timeoutInMs), window.fetch(request),])
@@ -119,21 +127,26 @@ define("service.rest", ["service.account", "helper.settings", "fast"], function 
 		 * @param {Function=} onComplete
 		 * RAD.core.publish("service.rest.user_authorize", ["r@gmail.com", "12345",]);
 		 */
-		user_authorize: function (email, password
-			, onSuccess = this._success, onError = this._error, onComplete = this._complete) {
-			RAD.widget.spin.show();
+		account_signin: function (email
+			, password
+			, onSuccess = this._success
+			, onError = this._error
+			, onComplete = this._complete) {
+			let timerId = _.delay(RAD.widget.spin.show, 500);
 			this._fetch(
 				this._urlCompose("?path=user_authorize"),
 				function fetchSuccess(json) {
+					clearTimeout(timerId);
 					RAD.widget.spin.hide();
-					RAD.core.publish("service.account.user_authorize", json);
+					RAD.core.publish("service.account.signin", [json.data]);
 					onSuccess(json);
-					onComplete();
+					_.execute(onComplete, [json]);
 				},
 				function fetchError(...args) {
+					clearTimeout(timerId);
 					RAD.widget.spin.hide();
 					onError(...args);
-					onComplete();
+					_.execute(onComplete, [args]);
 				},
 				{
 					method: "POST",
@@ -154,11 +167,11 @@ define("service.rest", ["service.account", "helper.settings", "fast"], function 
 		 * @example
 		 * RAD.core.publish("service.rest.user_register", ["Anton Trofimenko", "r@gmail.com", "12345",]);
 		 */
-		user_register: function (fullname, email, password, onSuccess = this._success, onError = this._error) {
+		account_signup: function (fullname, email, password, onSuccess = this._success, onError = this._error) {
 			this._fetch(
 				this._urlCompose("?path=user_register"),
 				function fetchSuccess(json) {
-					RAD.core.publish("service.account.user_register", json.data);
+					RAD.core.publish("service.account.signup", json.data);
 					onSuccess(json.data);
 				},
 				function fetchError(...args) {

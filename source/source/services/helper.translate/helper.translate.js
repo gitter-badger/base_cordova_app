@@ -1,5 +1,5 @@
 "use strict";
-define("helper.translate", ["helper.settings", "string"], function () {
+define("helper.translate", ["helper.settings", "string",], function () {
 	let translations = {
 		"": {
 			"en": "",
@@ -65,6 +65,11 @@ define("helper.translate", ["helper.settings", "string"], function () {
 			"en": "server does not respond",
 			"ru": "сервер не отвечает",
 			"ua": "сервер не відповідає",
+		},
+		"err_internet_timeout": {
+			"en": "the server has timed out",
+			"ru": "вышло время ожидания сервера",
+			"ua": "вийшов час очікування сервера",
 		},
 	};
 

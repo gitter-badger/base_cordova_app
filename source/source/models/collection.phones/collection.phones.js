@@ -1,5 +1,5 @@
 "use strict";
-define("collection.phones", ["model.person"], function () {
+define("collection.phones", ["model.person",], function () {
 	/**
 	 * @class RAD.coleection.phones
 	 */

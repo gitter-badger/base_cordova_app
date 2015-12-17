@@ -45,6 +45,7 @@
 	"disallowTrailingComma": null,
 	"disallowTrailingWhitespace": true,
 	"disallowYodaConditions": true,
+	"maxErrors": 9999,
 	"maximumLineLength": 120,
 	"requireAlignedObjectValues": "ignoreFunction",
 	"requireBlocksOnNewline": true,

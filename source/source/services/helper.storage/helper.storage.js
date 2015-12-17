@@ -1,5 +1,13 @@
 "use strict";
-define("helper.storage", ["localforage"], function () {
+define("helper.storage", ["localforage",], function () {
+	window.localforage.config({
+		driver: window.localforage.LOCALSTORAGE,
+		name: "BaseCordovaExample",
+		version: 1.0,
+		size: 4980736,
+		storeName: "base_cordova_example",
+		description: "description",
+	});
 	/**
 	 * @class RAD.helper.storage
 	 */

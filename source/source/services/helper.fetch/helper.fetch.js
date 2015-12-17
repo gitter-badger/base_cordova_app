@@ -1,5 +1,8 @@
 "use strict";
-define("helper.fetch", ["helper.settings", "helper.translate"], function () {
+define("helper.fetch", [
+	"helper.settings",
+	"helper.translate",
+], function () {
 	/**
 	 * @class RAD.helper.fetch
 	 */
@@ -51,9 +54,17 @@ define("helper.fetch", ["helper.settings", "helper.translate"], function () {
 			}
 		},
 		getErrorText: function (text) {
+			if ("message" in text) {
+				text = text.message;
+			}
 			switch (text) {
 				case "TypeError: Failed to fetch":
+				case "Failed to fetch":
 					return __("err_internet_desconnected");
+					break;
+				case "Error: Timeout":
+				case "Timeout":
+					return __("err_internet_timeout");
 					break;
 				default:
 					return text;

@@ -1,5 +1,5 @@
 "use strict";
-define("screen.home", ["collection.phones"], function () {
+define("screen.home", ["collection.phones",], function () {
 	/**
 	 * @class RAD.view.screen.home
 	 */

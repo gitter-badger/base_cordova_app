@@ -1,5 +1,5 @@
 "use strict";
-define("service.account", ["helper.storage", "service.basic"], function () {
+define("service.account", ["helper.storage", "service.basic",], function () {
 	/**
 	 * @class RAD.service.account
 	 */
@@ -10,7 +10,7 @@ define("service.account", ["helper.storage", "service.basic"], function () {
 		 * Event when new authorization emitted
 		 * @param {Object} authData
 		 */
-		user_signin: function (authData) {
+		signin: function (authData) {
 			let attrs = _.pick(authData, Object.keys(this.model.attributes));
 			this.model.set(attrs);
 			this.model.save();
@@ -19,7 +19,9 @@ define("service.account", ["helper.storage", "service.basic"], function () {
 		 * Event when new registration emitted
 		 * @param {Object} authData
 		 */
-		user_signup: function (authData) {
+		signup: function (authData) {
+			console.info("user_signup");
+
 			let attrs = _.pick(authData, Object.keys(this.model.attributes));
 			this.model.set(attrs);
 			this.model.save();

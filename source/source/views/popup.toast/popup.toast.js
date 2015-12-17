@@ -1,5 +1,8 @@
 "use strict";
-define("popup.toast", ["backbone", "helper.fetch"], function () {
+define("popup.toast", [
+	"backbone",
+	"helper.fetch",
+], function () {
 	/**
 	 * @class RAD.popup.toast
 	 */

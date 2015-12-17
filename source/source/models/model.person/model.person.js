@@ -1,5 +1,5 @@
 "use strict";
-define("model.person", ["backbone"], function () {
+define("model.person", ["backbone",], function () {
 	/**
 	 * @class RAD.model.person
 	 */

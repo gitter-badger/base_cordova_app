@@ -8,10 +8,10 @@
 	{
 		let views = {
 			screen: [
-				"auth",
 				"basic",
 				"home",
 				"login",
+				"menu",
 			],
 			widget: [
 				"spin",
@@ -24,10 +24,13 @@
 		let models = {
 			collection: [
 				"phones",
+				"quiz",
 			],
 			model: [
 				"account",
+				"login",
 				"person",
+				"quiz",
 			],
 		};
 		let services = {
