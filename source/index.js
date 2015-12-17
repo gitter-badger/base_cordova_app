@@ -93,7 +93,6 @@
 		"string",
 		"types",
 		"underscore",
-		"webcomponents",
 	];
 	vendorNames.forEach(vendor => paths[vendor] = vendor + ".min");
 	let shim = {
@@ -186,7 +185,6 @@
 				//loadHTML([
 				//	"polymer",
 				//	"paper-button",
-				//	"paper-button-behavior",
 				//]);
 				let include = {};
 				let applicationjs = "source/application/application.js";

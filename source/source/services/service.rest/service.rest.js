@@ -126,13 +126,11 @@ define("service.rest", ["service.account", "helper.settings", "fast"], function 
 				this._urlCompose("?path=user_authorize"),
 				function fetchSuccess(json) {
 					RAD.widget.spin.hide();
-					RAD.core.publish("service.account.user_authorize", json.data);
-					onSuccess(json.data);
+					RAD.core.publish("service.account.user_authorize", json);
+					onSuccess(json);
 					onComplete();
 				},
 				function fetchError(...args) {
-					console.dir(arguments);
-
 					RAD.widget.spin.hide();
 					onError(...args);
 					onComplete();

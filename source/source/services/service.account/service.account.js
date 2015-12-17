@@ -10,16 +10,16 @@ define("service.account", ["helper.storage", "service.basic"], function () {
 		 * Event when new authorization emitted
 		 * @param {Object} authData
 		 */
-		user_authorize: function (authData) {
+		user_signin: function (authData) {
 			let attrs = _.pick(authData, Object.keys(this.model.attributes));
 			this.model.set(attrs);
 			this.model.save();
 		},
 		/**
-		 * Event when new authorization emitted
+		 * Event when new registration emitted
 		 * @param {Object} authData
 		 */
-		user_register: function (authData) {
+		user_signup: function (authData) {
 			let attrs = _.pick(authData, Object.keys(this.model.attributes));
 			this.model.set(attrs);
 			this.model.save();

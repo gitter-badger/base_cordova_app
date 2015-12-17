@@ -1,5 +1,5 @@
 "use strict";
-define("popup.toast", ["backbone"], function () {
+define("popup.toast", ["backbone", "helper.fetch"], function () {
 	/**
 	 * @class RAD.popup.toast
 	 */
@@ -90,7 +90,9 @@ define("popup.toast", ["backbone"], function () {
 			if (title) {
 				title.trim();
 			}
-			ttl = 3000;
+			if (!ttl) {
+				ttl = 3000;
+			}
 			if (!["error", "message", "warning", "info"].includes(type)) {
 				type = "message";
 			}
@@ -117,4 +119,10 @@ define("popup.toast", ["backbone"], function () {
 			RAD.core.publish("navigation.toast.show", options);
 		}
 	);
+	RAD.namespace("popup.toast.server_error", function (message) {
+		RAD.popup.toast("", RAD.helper.fetch.getErrorText(message), "error", 1e3);
+	});
+	RAD.namespace("popup.toast.server_warning", function (message) {
+		RAD.popup.toast("", RAD.helper.fetch.getErrorText(message), "warning", 1e3);
+	});
 });

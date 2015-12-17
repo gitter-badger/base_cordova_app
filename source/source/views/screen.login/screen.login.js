@@ -1,5 +1,7 @@
 "use strict";
-define("screen.login", ["model.account", "screen.basic"], function () {
+define("screen.login"
+	, ["model.account", "screen.basic", "helper.fetch", "helper.translate"]
+	, function () {
 	RAD.model("model.login", Backbone.Model.extend({
 		defaults: {
 			"login_signin_email": "",
@@ -35,7 +37,6 @@ define("screen.login", ["model.account", "screen.basic"], function () {
 					return __("please fill full name field");
 				}
 			}
-			//
 		}
 	}), true);
 	/**
@@ -112,29 +113,34 @@ define("screen.login", ["model.account", "screen.basic"], function () {
 			}
 		},
 		eventTapSigninSubmit: function () {
-			console.info("eventTapSigninSubmit");
 			if (this.model.isValid({signin: true})) {
-				let auth = [
+				let signin = [
 					this.model.get("login_signin_email"),
 					this.model.get("login_signin_password"),
-					function () {
-						console.dir(arguments);
+					function (response) {
+						// @todo go to login screen
+						this.publish("", response);
 					},
-					function (error) {
-						// TypeError: Failed to fetch
-						//RAD.popup.toast("", error, "error");
-					}
+					RAD.popup.toast.server_error,
 				];
-				RAD.core.publish("service.rest.user_authorize", auth);
+				RAD.core.publish("service.rest.user_signin", signin);
 			} else {
 				RAD.popup.toast("", this.model.validationError, "warning");
 			}
 		},
 		eventTapSignupSubmit: function () {
-			console.info("eventTapSignupSubmit");
 			if (this.model.isValid({signup: true})) {
-				console.info("Valid");
-				//RAD.application.login(this.model.get("email"), this.model.get("password"));
+				let signup = [
+					this.model.get("login_signup_fullname"),
+					this.model.get("login_signup_email"),
+					this.model.get("login_signup_password"),
+					function (response) {
+						// @todo go to login screen
+						this.publish("", response);
+					},
+					RAD.popup.toast.server_error,
+				];
+				RAD.core.publish("service.rest.user_signup", signup);
 			} else {
 				RAD.popup.toast("", this.model.validationError, "warning");
 			}

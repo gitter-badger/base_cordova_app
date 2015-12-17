@@ -61,16 +61,23 @@ define("helper.translate", ["helper.settings", "string"], function () {
 			"ru": "введен некорректный email",
 			"ua": "введений некоректний email",
 		},
+		"err_internet_desconnected": {
+			"en": "server does not respond",
+			"ru": "сервер не отвечает",
+			"ua": "сервер не відповідає",
+		},
 	};
 
 	function translate(text, mode) {
 		if (text in translations === false) {
-			return "{{" + text + "}}";
+			text = text.toLowerCase();
+			if (text in translations === false) {
+				return text;
+			}
 		}
-		//
 		let language = RAD.helper.settings.language;
 		if (language in translations[text] === false) {
-			return "{{" + text + "}}";
+			return text;
 		}
 		text = translations[text][language];
 		if (arguments.length < 2) {

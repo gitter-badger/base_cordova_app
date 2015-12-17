@@ -1,5 +1,5 @@
 "use strict";
-define("helper.fetch", ["helper.settings"], function () {
+define("helper.fetch", ["helper.settings", "helper.translate"], function () {
 	/**
 	 * @class RAD.helper.fetch
 	 */
@@ -48,6 +48,16 @@ define("helper.fetch", ["helper.settings"], function () {
 				var error = new Error(response.statusText || response.status);
 				error.response = response;
 				throw error;
+			}
+		},
+		getErrorText: function (text) {
+			switch (text) {
+				case "TypeError: Failed to fetch":
+					return __("err_internet_desconnected");
+					break;
+				default:
+					return text;
+					break;
 			}
 		}
 	});
