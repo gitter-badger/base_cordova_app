@@ -142,6 +142,8 @@
 
 	loadCSS([
 		"vendors/bootstrap.min.css",
+		"source/assets/css/ie10.min.css",
+		"source/assets/css/cosmo.min.css",
 		"source/assets/css/index.css",
 	]);
 	/**
