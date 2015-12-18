@@ -13,6 +13,7 @@ define("service.rest", [
 		 * @constructor
 		 */
 		onInitialize: function () {
+			// in case you prefer jQuery
 			$.ajaxSetup({
 				cache: false,
 				contentType: "application/json",
@@ -21,7 +22,7 @@ define("service.rest", [
 				headers: {
 					"Accept-Language": "ru",
 				},
-				timeout: 60e3,
+				timeout: RAD.helper.settings.server.timeout,
 				xhrFields: {
 					withCredentials: false,
 				},
@@ -67,122 +68,122 @@ define("service.rest", [
 			}
 			let opts = {};
 			fast.assign(opts, basic, options);
+			opts.method = opts.method.toUpperCase();
 			return opts;
 		},
 		/**
 		 * Compose fetch request
 		 * @param {String} url
-		 * @param {Function} onSuccess
-		 * @param {Function} onError
+		 * @param {Function} done
+		 * @param {Function} fail
 		 * @param {Object=} requrestOptions
 		 * @param {Number=} timeoutInMs
 		 * @private
 		 */
-		_fetch: function (url
-			, onSuccess
-			, onError
-			, requrestOptions = {}
-			, timeoutInMs = RAD.helper.settings.server.timeout) {
+		_fetch: function (url, done, fail, requrestOptions = {}, timeoutInMs = RAD.helper.settings.server.timeout) {
 			let request = new Request(url, this._fetchOptions(requrestOptions));
-			var Fetch = RAD.helper.fetch;
-			Promise.race([Fetch.timeoutPromise(timeoutInMs), window.fetch(request),])
-				.then(Fetch.isPromise)
-				.then(Fetch.isOk)
-				.then(Fetch.statusOk)
-				.then(Fetch.responseJson)
-				.then(response => onSuccess(response))
-				.catch(response => onError(response));
+			let _fetch = RAD.helper.fetch;
+			Promise.race([
+					_fetch.timeoutPromise(timeoutInMs),
+					window.fetch(request),
+				])
+				.then(_fetch.isPromise)
+				.then(_fetch.isOk)
+				.then(_fetch.statusOk)
+				.then(_fetch.responseJson)
+				.then(response => done(response))
+				.catch(response => fail(response));
 		},
 		/**
 		 * Compose url for fetch request
-		 * @param {String=""} url
-		 * @param {Boolean=true} addDomain
-		 * @param {Object=} getParams
+		 * @param {Array|String=""} url
+		 * @param {Object=} params
+		 * @param {Boolean=true} domain
 		 * @return {String}
 		 * @private
 		 */
-		_urlCompose: function (url = "", addDomain = true, getParams = {}) {
+		_urlCompose: function (url = "", params = {}, domain = true) {
+			if (Array.isArray(url)) {
+				url = url.join("/");
+			} else {
+				url += "";
+			}
+			if (!_.isObject(params)) {
+				params = {};
+			}
+			params = $.param(params);
 			let link = "";
-			if (addDomain) {
+			if (domain) {
 				link = RAD.helper.settings.server.domain + url;
 			} else {
 				link = url;
 			}
-			return link;
+			return link + "?" + params;
 		},
-		_success: function (response) {
-			window.console.info(response);
+		_done: function (response) {
+			console.info(response);
 		},
-		_error: function (response) {
-			window.console.warn(response);
+		_fail: function (response) {
+			console.warn(response);
 		},
-		_complete: function (response) {
-			window.console.log(response);
+		_always: function (response) {
+			console.log(response);
 		},
 		/**
 		 * @param {string} email
 		 * @param {string} password
-		 * @param {Function=} onSuccess
-		 * @param {Function=} onError
-		 * @param {Function=} onComplete
+		 * @param {Function=} done
+		 * @param {Function=} fail
+		 * @param {Function=} always
 		 * RAD.core.publish("service.rest.user_authorize", ["r@gmail.com", "12345",]);
 		 */
-		account_signin: function (email
-			, password
-			, onSuccess = this._success
-			, onError = this._error
-			, onComplete = this._complete) {
+		account_signin: function (email, password, done = this._done, fail = this._fail, always = this._always) {
 			let timerId = _.delay(RAD.widget.spin.show, 500);
 			this._fetch(
-				this._urlCompose("?path=user_authorize"),
-				function fetchSuccess(json) {
+				this._urlCompose(["account", "signin"]),
+				json => {
 					clearTimeout(timerId);
 					RAD.widget.spin.hide();
-					RAD.core.publish("service.account.signin", [json.data]);
-					onSuccess(json);
-					_.execute(onComplete, [json]);
+					this.publish("service.account.signin", [json.data]);
+					done(json);
+					_.execute(always, [json]);
 				},
-				function fetchError(...args) {
+				...args => {
 					clearTimeout(timerId);
 					RAD.widget.spin.hide();
-					onError(...args);
-					_.execute(onComplete, [args]);
+					fail(...args);
+					_.execute(always, [args]);
 				},
 				{
 					method: "POST",
 					body: {
-						email: email,
-						password: password,
+						email, password,
 					},
 				}
 			);
 		},
 		/**
 		 * Register user
-		 * @param {String} fullname
+		 * @param {String} fullName
 		 * @param {String} email
 		 * @param {String} password
-		 * @param {Function=} onSuccess
-		 * @param {Function=} onError
+		 * @param {Function=} done
+		 * @param {Function=} fail
 		 * @example
 		 * RAD.core.publish("service.rest.user_register", ["Anton Trofimenko", "r@gmail.com", "12345",]);
 		 */
-		account_signup: function (fullname, email, password, onSuccess = this._success, onError = this._error) {
+		account_signup: function (fullName, email, password, done = this._done, fail = this._fail) {
 			this._fetch(
-				this._urlCompose("?path=user_register"),
-				function fetchSuccess(json) {
-					RAD.core.publish("service.account.signup", json.data);
-					onSuccess(json.data);
+				this._urlCompose(["account", "signup"]),
+				json => {
+					this.publish("service.account.signup", json.data);
+					done(json);
 				},
-				function fetchError(...args) {
-					onError(...args);
-				},
+				...args => fail(...args),
 				{
 					method: "POST",
 					body: {
-						fullName: fullname,
-						email: email,
-						password: password,
+						fullName, email, password,
 					},
 				}
 			);
@@ -190,54 +191,42 @@ define("service.rest", [
 		/**
 		 * @example RAD.core.publish("service.rest.quiz_list");
 		 */
-		quiz_list: function (onSuccess = this._success, onError = this._error) {
+		quiz_list: function (done = this._done, fail = this._fail) {
 			this._fetch(
-				this._urlCompose("?path=quiz_list"),
-				function fetchSuccess(json) {
-					onSuccess(json.data);
-				},
-				function fetchError(...args) {
-					onError(...args);
-				}
+				this._urlCompose("quiz"),
+				json => done(json),
+				...args => fail(...args)
 			);
 		},
-		quiz_start: function (quizId, onSuccess = this._success, onError = this._error) {
+		quiz_start: function (quizId, done = this._done, fail = this._fail) {
 			this._fetch(
-				this._urlCompose("?path=quiz_start"),
-				function fetchSuccess(json) {
-					onSuccess(json.data);
-				},
-				function fetchError(...args) {
-					onError(...args);
-				},
+				this._urlCompose(["quiz", "start"]),
+				json => done(json),
+				...args => fail(...args),
 				{
 					method: "POST",
 					body: {
-						quizId: quizId,
+						quizId,
 					}
 				}
 			);
 		},
 		/**
 		 * @param {String} questionId
-		 * @param {String|String[]} resultIds
-		 * @param {Function=} onSuccess
-		 * @param {Function=} onError
+		 * @param {String|String[]} answerIds
+		 * @param {Function=} done
+		 * @param {Function=} fail
 		 */
-		answer_send: function (questionId, resultIds, onSuccess = this._success, onError = this._error) {
+		answer_send: function (questionId, answerIds, done = this._done, fail = this._fail) {
 			this._fetch(
-				this._urlCompose("?path=answer_send"),
-				function fetchSuccess(json) {
-					onSuccess(json.data);
-				},
-				function fetchError(...args) {
-					onError(...args);
-				},
+				this._urlCompose(["answer", "send"]),
+				json => done(json),
+				...args => fail(...args),
 				{
 					method: "POST",
 					body: {
-						questionId: questionId,
-						answerIds: resultIds,
+						questionId,
+						answerIds,
 					}
 				}
 			);

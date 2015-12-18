@@ -29,7 +29,7 @@ define("helper.fetch", [
 			if (response.ok) {
 				return response;
 			} else {
-				var error = new Error(response.statusText || response.status);
+				let error = new Error(response.statusText || response.status);
 				error.message = response.statusText || response.status;
 				error.response = response;
 				throw error;
@@ -48,7 +48,7 @@ define("helper.fetch", [
 			if (response.status >= 200 && response.status < 300) {
 				return response;
 			} else {
-				var error = new Error(response.statusText || response.status);
+				let error = new Error(response.statusText || response.status);
 				error.response = response;
 				throw error;
 			}

@@ -14,7 +14,7 @@ define("collection.quiz", ["model.quiz",], function () {
 				name: "Nothing to show",
 			},
 		],
-		initialize: function () {
+		initialize: function (models, options) {
 			this.defaults.forEach(
 				model => this.add(
 					(new (RAD.model("model.quiz"))).set(model)

@@ -20,8 +20,6 @@ define("service.account", ["helper.storage", "service.basic",], function () {
 		 * @param {Object} authData
 		 */
 		signup: function (authData) {
-			console.info("user_signup");
-
 			let attrs = _.pick(authData, Object.keys(this.model.attributes));
 			this.model.set(attrs);
 			this.model.save();

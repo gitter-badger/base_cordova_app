@@ -34,7 +34,7 @@ define("popup.toast", [
 		onInitialize: function () {
 			this.subscribe("navigation.back", this.onNavigationLeave, this);
 			this.subscribe("navigation.show", this.onNavigationLeave, this);
-			var Model = Backbone.Model.extend();
+			let Model = Backbone.Model.extend();
 			this.model = new Model();
 		},
 		onDestroy: function () {
@@ -105,7 +105,7 @@ define("popup.toast", [
 			if (!_.isFunction(onFinish)) {
 				onFinish = new Function;
 			}
-			var options = {
+			let options = {
 				content: "popup.toast",
 				outsideClose: true,
 				gravity: gravity,

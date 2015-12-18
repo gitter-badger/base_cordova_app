@@ -22,20 +22,26 @@ $headers = [
 
 $http_response_code = 200;
 $path = !empty($_GET["path"]) ? $_GET["path"] : "index";
+$request = mb_substr($_SERVER["REQUEST_URI"], 1, null);
+$path = explode('/', $request);
 $method = $_SERVER["REQUEST_METHOD"];
 $api = [
-	"identity" => "index",
-	"version_sender" => "1.0.0",
-	"version_actual" => "1.0.0",
-	"data" => [],
-	"date" => "Thu, 31 Dec 2015 12:00:00 +0000",
-	"code" => 200,
-	"message" => "OK",
-	"status" => "success"
+	"code"=> 200,
+	"data"=> [],
+	"date"=> "Thu, 31 Dec 2015 12=>00=>00 +0000",
+	"identity"=> "index",
+	"message"=> "OK",
+	"method"=> $method,
+	"status"=> "success",
+	"version_actual"=> "1.0.0",
+	"version_sender"=> "1.0.0",
 ];
 $api["input"] = $input = json_decode(file_get_contents("php://input"));
 $api["error"] = null;
-switch ($path) {
+switch ($request) {
+	default:
+		exit (json_encode($path));
+		break;
 	case "index":
 		$api["identity"] = "index";
 		$api["data"] = [

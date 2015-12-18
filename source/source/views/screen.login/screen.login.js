@@ -6,6 +6,7 @@ define("screen.login", [
 	"model.login",
 	"screen.basic",
 ], function () {
+	let onInput = RAD.screen.basic.onInput;
 	/**
 	 * @class RAD.screen.login
 	 */
@@ -42,19 +43,19 @@ define("screen.login", [
 			this.model.trigger("change");
 		},
 		eventInputSigninEmail: function (event) {
-			RAD.screen.basic.onInput.call(this, "login_signin_email", event);
+			onInput.call(this, "login_signin_email", event);
 		},
 		eventInputSigninPassword: function (event) {
-			RAD.screen.basic.onInput.call(this, "login_signin_password", event);
+			onInput.call(this, "login_signin_password", event);
 		},
 		eventInputSignupFullname: function (event) {
-			RAD.screen.basic.onInput.call(this, "login_signup_fullname", event);
+			onInput.call(this, "login_signup_fullname", event);
 		},
 		eventInputSignupEmail: function (event) {
-			RAD.screen.basic.onInput.call(this, "login_signup_email", event);
+			onInput.call(this, "login_signup_email", event);
 		},
 		eventInputSignupPassword: function (event) {
-			RAD.screen.basic.onInput.call(this, "login_signup_password", event);
+			onInput.call(this, "login_signup_password", event);
 		},
 		_jumpToElement: function (query) {
 			this.$(query).trigger("tap").focus();
@@ -80,43 +81,49 @@ define("screen.login", [
 			}
 		},
 		eventTapSigninSubmit: function () {
-			if (this.model.isValid({signin: true})) {
-				let signin = [
-					this.model.get("login_signin_email"),
-					this.model.get("login_signin_password"),
-					(response) =>
-						this.publish("navigation.show", {
-							container_id: "#screen",
-							content: "screen.menu",
-							extras: {
-								response,
-							},
-							animation: "slide-in",
-						})
-					,
-					RAD.popup.toast.server_error,
-				];
-				RAD.core.publish("service.rest.account_signin", signin);
-			} else {
+			if (!this.model.isValid({signin: true})) {
 				RAD.popup.toast("", this.model.validationError, "warning");
+				return;
 			}
+			let signin = [
+				this.model.get("login_signin_email"),
+				this.model.get("login_signin_password"),
+				response =>
+					this.publish("navigation.show", {
+						container_id: "#screen",
+						content: "screen.menu",
+						extras: {
+							response,
+						},
+						animation: "slide-in",
+					})
+				,
+				RAD.popup.toast.server_error,
+			];
+			RAD.core.publish("service.rest.account_signin", signin);
 		},
 		eventTapSignupSubmit: function () {
-			if (this.model.isValid({signup: true})) {
-				let signup = [
-					this.model.get("login_signup_fullname"),
-					this.model.get("login_signup_email"),
-					this.model.get("login_signup_password"),
-					function (response) {
-						// @todo go to login screen
-						this.publish("", response);
-					},
-					RAD.popup.toast.server_error,
-				];
-				RAD.core.publish("service.rest.user_signup", signup);
-			} else {
+			if (!this.model.isValid({signup: true})) {
 				RAD.popup.toast("", this.model.validationError, "warning");
+				return;
 			}
+			let signup = [
+				this.model.get("login_signup_fullname"),
+				this.model.get("login_signup_email"),
+				this.model.get("login_signup_password"),
+				response =>
+					this.publish("navigation.show", {
+						container_id: "#screen",
+						content: "screen.menu",
+						extras: {
+							response,
+						},
+						animation: "slide-in",
+					})
+				,
+				RAD.popup.toast.server_error,
+			];
+			RAD.core.publish("service.rest.account_signup", signup);
 		}
 	}));
 });

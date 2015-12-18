@@ -22,7 +22,7 @@ define("collection.phones", ["model.person",], function () {
 				phone: "555-333-444",
 			},
 		],
-		initialize: function () {
+		initialize: function (models, options) {
 			this.defaults.forEach(
 				model => this.add(
 					(new (RAD.model("model.person"))).set(model)

@@ -16,11 +16,11 @@ define("popup.dialog", [
 		onInitialize: function () {
 			this.subscribe("navigation.back", this.onNavigationLeave, this);
 			this.subscribe("navigation.show", this.onNavigationLeave, this);
-			var Model = Backbone.Model.extend();
+			let Model = Backbone.Model.extend();
 			this.model = new Model();
 		},
 		onNewExtras: function (extras) {
-			var cfg = {
+			let cfg = {
 				message: extras.message,
 				type: extras.type,
 				button: [
@@ -50,7 +50,7 @@ define("popup.dialog", [
 			this.model.set(cfg);
 		},
 		tapButton: function (event) {
-			var setId = this.$(event.currentTarget).data("set");
+			let setId = this.$(event.currentTarget).data("set");
 			this.publish("navigation.dialog.close", {
 				content: "popup.dialog",
 			});
@@ -80,7 +80,7 @@ define("popup.dialog", [
 		if (!["error", "message", "warning", "info"].includes(type)) {
 			type = "message";
 		}
-		var options = {
+		let options = {
 			content: "popup.dialog",
 			gravity: "center",
 			extras: {

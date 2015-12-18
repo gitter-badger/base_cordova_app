@@ -8,7 +8,7 @@ define("model.account", ["backbone.localStorage",], function () {
 			email: "",
 			accessToken: null,
 		},
-		initialize: function () {
+		initialize: function (attributes, options) {
 			this.fetch();
 		}
 	});

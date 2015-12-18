@@ -1,7 +1,7 @@
 "use strict";
 define("screen.menu", ["collection.quiz",], function () {
 	/**
-	 * @class RAD.view.screen.menu
+	 * @class RAD.screen.menu
 	 */
 	RAD.view("screen.menu", RAD.Blanks.View.extend({
 		url: "source/views/screen.menu/screen.menu.ejs",
@@ -11,4 +11,3 @@ define("screen.menu", ["collection.quiz",], function () {
 		model: RAD.model("collection.quiz"),
 	}));
 });
-

@@ -1,7 +1,7 @@
 "use strict";
 define("application", [], function () {
 	RAD.application(function (core) {
-		var app = this;
+		let app = this;
 		app.start = function () {
 			function onDeviceReady() {
 				core.startAll();

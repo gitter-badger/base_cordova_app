@@ -1,7 +1,7 @@
 "use strict";
 define("widget.spin", ["backbone",], function () {
 	/**
-	 * @class RAD.view.widget.spin
+	 * @class RAD.widget.spin
 	 * @example
 	 * RAD.core.publish("navigation.dialog.show", {
 	 *   content: "widget.spin",
