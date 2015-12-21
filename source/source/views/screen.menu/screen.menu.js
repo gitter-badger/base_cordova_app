@@ -8,6 +8,10 @@ define("screen.menu", [
 			this.url = "source/views/screen.menu/screen.menu.ejs";
 			this.model = RAD.model("collection.quiz");
 		}
+
+		onEndAttach () {
+			console.info("onEndAttach");
+		}
 	}
 	RAD.view("screen.menu", RAD.Blanks.View.extend(_.instance(ScreenMenu)));
 });

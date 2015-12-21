@@ -5,6 +5,11 @@ define("application", [], function () {
 		app.start = function () {
 			function onDeviceReady() {
 				core.startAll();
+				core.publish("navigation.show", {
+					container_id: "#navigation",
+					content: "widget.navigation",
+					animation: "none",
+				});
 				let accessToken = RAD.model("model.account").get("accessToken");
 				if (accessToken) {
 					core.publish("navigation.show", {

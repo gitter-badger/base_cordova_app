@@ -14,6 +14,7 @@
 				"menu",
 			],
 			widget: [
+				"navigation",
 				"spin",
 			],
 			popup: [
@@ -29,6 +30,7 @@
 			model: [
 				"account",
 				"login",
+				"navigation",
 				"person",
 				"quiz",
 			],
