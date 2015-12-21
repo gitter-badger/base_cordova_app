@@ -91,21 +91,19 @@ define("helper.translate", ["helper.settings", "string",], function () {
 			mode = 0;
 		}
 		switch (mode) {
-			case 1:
+			case translate.PARAGRAPH:
 				text = S(text).capitalize().s;
 				break;
-			case 2:
-				text = text.replace(/(?:^|\s)\S/g, function (str) {
-					return S(str).capitalize().s;
-				});
+			case translate.CAPITALIZE:
+				text = text.replace(/(?:^|\s)\S/g, string => S(string).capitalize().s);
 				break;
-			case 3:
+			case translate.UPPERCASE:
 				text = text.toUpperCase();
 				break;
-			case 4:
+			case translate.LOWERCASE:
 				text = text.toLowerCase();
 				break;
-			case 5:
+			case translate.HUMANIZE:
 				text = S(text).humanize().s;
 				break;
 		}

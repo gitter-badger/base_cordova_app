@@ -9,8 +9,7 @@
 @import "widget.spinner";
 
 body {
-	//font-family: system, -apple-system, "Share Tech Mono", monospace;
-	font-family: "Hack", monospace;
+	font-family: system, -apple-system, "Hack", monospace;
 }
 
 #screen_main > ul {
@@ -37,4 +36,36 @@ body {
 
 #screen {
 	margin-top: 40px;
+}
+
+html {
+	font-size: 18px;
+}
+
+body {
+	font-size: 18px;
+}
+
+h1, .h1 {
+	font-size: 36px
+}
+
+h2, .h2 {
+	font-size: 32px
+}
+
+h3, .h3 {
+	font-size: 28px
+}
+
+h4, .h4 {
+	font-size: 24px
+}
+
+h5, .h5 {
+	font-size: 20px
+}
+
+h6, .h6 {
+	font-size: 16px
 }

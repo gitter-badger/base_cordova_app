@@ -919,7 +919,7 @@
 
 				self.extend = function (proto) {
 					if (proto.constructor.name !== "Object") {
-						console.info(proto.constructor.name);
+						//console.info(proto.constructor.name);
 					}
 					var key, k = function (magic) {
 						if (magic !== isFn && isFn(this.initialize)) {

@@ -23,6 +23,20 @@ define("helper.util", ["underscore",], function () {
 				}
 				return /^[a-zA-Zа-яА-Я_\s]{1,30}$/.test(string);
 			}
+		},
+		instance: function (Constructor) {
+			var instance = new Constructor;
+			var keys = Reflect.ownKeys(instance);
+			for (let name of Object.getOwnPropertyNames(Object.getPrototypeOf(instance))) {
+				let method = instance[name];
+				if (!(method instanceof Function) || method === Constructor) {
+					continue;
+				}
+				keys.push(name);
+			}
+			var obj = {};
+			keys.forEach(name => obj[name] = instance[name]);
+			return obj;
 		}
 	};
 	/**

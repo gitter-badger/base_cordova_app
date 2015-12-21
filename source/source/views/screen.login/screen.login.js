@@ -2,65 +2,73 @@
 define("screen.login", [
 	"helper.fetch",
 	"helper.translate",
+	"helper.util",
 	"model.account",
 	"model.login",
 	"screen.basic",
 ], function () {
 	let onInput = RAD.screen.basic.onInput;
-	/**
-	 * @class RAD.screen.login
-	 */
-	RAD.view("screen.login", RAD.Blanks.View.extend({
-		url: "source/views/screen.login/screen.login.ejs",
-		className: "override-scroll",
-		/**
-		 * @see RAD.model.login
-		 */
-		model: RAD.model("model.login"),
-		events: {
-			"keyup #login_signin_email": "eventKeyUp",
-			"keyup #login_signin_password": "eventKeyUp",
-			"tap   #login_signin_submit": "eventTapSigninSubmit",
-			//
-			"keyup #login_signup_fullname": "eventKeyUp",
-			"keyup #login_signup_email": "eventKeyUp",
-			"keyup #login_signup_password": "eventKeyUp",
-			"tap   #login_signup_submit": "eventTapSignupSubmit",
-			//
-			"input          #login_signin_email": "eventInputSigninEmail",
-			"propertychange #login_signin_email": "eventInputSigninEmail",
-			"input          #login_signin_password": "eventInputSigninPassword",
-			"propertychange #login_signin_password": "eventInputSigninPassword",
-			//
-			"input          #login_signup_fullname": "eventInputSignupFullname",
-			"propertychange #login_signup_fullname": "eventInputSignupFullname",
-			"input          #login_signup_email": "eventInputSignupEmail",
-			"propertychange #login_signup_email": "eventInputSignupEmail",
-			"input          #login_signup_password": "eventInputSignupPassword",
-			"propertychange #login_signup_password": "eventInputSignupPassword",
-		},
-		onStartAttach: function () {
+	class ScreenLogin {
+		constructor() {
+			this.url = "source/views/screen.login/screen.login.ejs";
+			this.className = "override-scroll";
+			/**
+			 * @see RAD.model.login
+			 */
+			this.model = RAD.model("model.login");
+			this.events = {
+				"keyup #login_signin_email": "eventKeyUp",
+				"keyup #login_signin_password": "eventKeyUp",
+				"tap   #login_signin_submit": "eventTapSigninSubmit",
+				//
+				"keyup #login_signup_fullname": "eventKeyUp",
+				"keyup #login_signup_email": "eventKeyUp",
+				"keyup #login_signup_password": "eventKeyUp",
+				"tap   #login_signup_submit": "eventTapSignupSubmit",
+				//
+				"input          #login_signin_email": "eventInputSigninEmail",
+				"propertychange #login_signin_email": "eventInputSigninEmail",
+				"input          #login_signin_password": "eventInputSigninPassword",
+				"propertychange #login_signin_password": "eventInputSigninPassword",
+				//
+				"input          #login_signup_fullname": "eventInputSignupFullname",
+				"propertychange #login_signup_fullname": "eventInputSignupFullname",
+				"input          #login_signup_email": "eventInputSignupEmail",
+				"propertychange #login_signup_email": "eventInputSignupEmail",
+				"input          #login_signup_password": "eventInputSignupPassword",
+				"propertychange #login_signup_password": "eventInputSignupPassword",
+			};
+		}
+
+		onStartAttach() {
 			this.model.trigger("change");
-		},
-		eventInputSigninEmail: function (event) {
+		}
+
+		eventInputSigninEmail(event) {
 			onInput.call(this, "login_signin_email", event);
-		},
-		eventInputSigninPassword: function (event) {
+		}
+
+		eventInputSigninPassword(event) {
 			onInput.call(this, "login_signin_password", event);
-		},
-		eventInputSignupFullname: function (event) {
+		}
+
+		eventInputSignupFullname(event) {
 			onInput.call(this, "login_signup_fullname", event);
-		},
-		eventInputSignupEmail: function (event) {
+		}
+
+		eventInputSignupEmail(event) {
 			onInput.call(this, "login_signup_email", event);
-		},
-		eventInputSignupPassword: function (event) {
+		}
+
+		eventInputSignupPassword(event) {
 			onInput.call(this, "login_signup_password", event);
-		},
-		_jumpToElement: function (query) {
+		}
+
+		_jumpToElement(query) {
 			this.$(query).trigger("tap").focus();
-		},
-		eventKeyUp: function (event) {
+		}
+
+		eventKeyUp(event) {
 			switch (event.keyCode) {
 				case 13:
 					// Enter
@@ -79,8 +87,9 @@ define("screen.login", [
 					// Tab
 					break;
 			}
-		},
-		eventTapSigninSubmit: function () {
+		}
+
+		eventTapSigninSubmit() {
 			if (!this.model.isValid({signin: true})) {
 				RAD.popup.toast("", this.model.validationError, "warning");
 				return;
@@ -101,8 +110,9 @@ define("screen.login", [
 				RAD.popup.toast.server_error,
 			];
 			RAD.core.publish("service.rest.account_signin", signin);
-		},
-		eventTapSignupSubmit: function () {
+		}
+
+		eventTapSignupSubmit() {
 			if (!this.model.isValid({signup: true})) {
 				RAD.popup.toast("", this.model.validationError, "warning");
 				return;
@@ -125,5 +135,9 @@ define("screen.login", [
 			];
 			RAD.core.publish("service.rest.account_signup", signup);
 		}
-	}));
+	}
+	/**
+	 * @class RAD.screen.login
+	 */
+	RAD.view("screen.login", RAD.Blanks.View.extend(_.instance(ScreenLogin)));
 });
