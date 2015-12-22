@@ -14,10 +14,6 @@ define("widget.navigation", [
 			this.model = RAD.model("model.navigation");
 		}
 
-		onInitialize () {
-			console.info("WidgetNavigation::onInitialize");
-		}
-
 		onEndAttach () {
 
 		}

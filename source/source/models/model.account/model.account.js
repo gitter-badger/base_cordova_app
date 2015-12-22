@@ -9,7 +9,11 @@ define("model.account", ["backbone.localStorage",], function () {
 			accessToken: null,
 		},
 		initialize: function (attributes, options) {
-			this.fetch();
+			this.fetch({
+				success: function () {
+					RAD.core.publish("service.account.signed_in");
+				}
+			});
 		}
 	});
 	let modelAccount = new ModelAccount({id: "model.account"});

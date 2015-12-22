@@ -14,7 +14,7 @@ define("application", [], function () {
 				if (accessToken) {
 					core.publish("navigation.show", {
 						container_id: "#screen",
-						content: "screen.home",
+						content: "screen.menu",
 						animation: "none",
 					});
 				} else {

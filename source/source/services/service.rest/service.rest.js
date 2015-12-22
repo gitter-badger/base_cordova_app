@@ -148,7 +148,7 @@ define("service.rest", [
 					done(json);
 					_.execute(always, [json]);
 				},
-				...args => {
+				(...args) => {
 					clearTimeout(timerId);
 					RAD.widget.spin.hide();
 					fail(...args);
@@ -179,7 +179,7 @@ define("service.rest", [
 					this.publish("service.account.signup", json.data);
 					done(json);
 				},
-				...args => fail(...args),
+				(...args) => fail(...args),
 				{
 					method: "POST",
 					body: {
@@ -195,14 +195,14 @@ define("service.rest", [
 			this._fetch(
 				this._urlCompose("quiz"),
 				json => done(json),
-				...args => fail(...args)
+				(...args) => fail(...args)
 			);
 		},
 		quiz_start: function (quizId, done = this._done, fail = this._fail) {
 			this._fetch(
 				this._urlCompose(["quiz", "start"]),
 				json => done(json),
-				...args => fail(...args),
+				(...args) => fail(...args),
 				{
 					method: "POST",
 					body: {
@@ -221,7 +221,7 @@ define("service.rest", [
 			this._fetch(
 				this._urlCompose(["answer", "send"]),
 				json => done(json),
-				...args => fail(...args),
+				(...args) => fail(...args),
 				{
 					method: "POST",
 					body: {

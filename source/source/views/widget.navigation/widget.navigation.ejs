@@ -27,7 +27,11 @@
 			<button type="submit" class="btn btn-success">Sign in</button>
 		</form>
 		{{# } else if (model.mode === "active") { }}
-			HELLO {{ RAD.model("model.account").get("model") }}!
+			<div class="navbar-form navbar-right">
+				<div class="form-group">
+					<span class="label label-default">{{ model.fullName }}</span>
+				</div>
+			</div>
 		{{# } }}
 	</div>
 </div>

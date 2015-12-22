@@ -25,6 +25,9 @@ define("service.account", [
 			this.model.set(attrs);
 			this.model.save();
 		},
+		signed_in: function () {
+			console.info("signed_in");
+		},
 		/**
 		 * @param {Function=} callback
 		 * @return {boolean}

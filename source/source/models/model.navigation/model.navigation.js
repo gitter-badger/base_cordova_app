@@ -2,6 +2,7 @@
 define("model.navigation", [
 	"helper.translate",
 	"helper.util",
+	"model.account",
 	"model.basic",
 	"service.account",
 ], function () {
@@ -10,14 +11,18 @@ define("model.navigation", [
 			title: "",
 			mode: "login",
 			is_session_active: function () {
-				return RAD.core.getService("service.account").is_active();
+				return !!RAD.model("model.account").get("accessToken");
+			},
+			fullName: function () {
+				return RAD.model("model.account").get("fullName");
 			},
 		},
 		initialize: function () {
 			this.set("title", __("navigation title"));
-			RAD.core.publish("service.account.is_active", this.accountEvent.bind(this, null));
+			RAD.core.publish("service.account.is_active", (error, active) => this.accountEvent(active), "sticky");
 			RAD.core.subscribe("service.account.signin", this.accountEvent.bind(this));
 			RAD.core.subscribe("service.account.signup", this.accountEvent.bind(this));
+			RAD.core.subscribe("service.account.signed_in", this.accountEvent.bind(this));
 		},
 		get: function (attrName) {
 			return _.getResult(Backbone.Model.prototype.get.call(this, attrName), this);

@@ -22,13 +22,29 @@ $headers = [
 
 $http_response_code = 200;
 $path = !empty($_GET["path"]) ? $_GET["path"] : "index";
-$request = mb_substr($_SERVER["REQUEST_URI"], 1, null);
+$request = join("/"
+	,array_filter(
+		explode("/"
+			, explode("?"
+				, mb_substr($_SERVER["REQUEST_URI"]
+					, 1
+					, null
+				)
+			)[0]
+		)
+		, function ($value) {
+			return !empty($value);
+		}
+	)
+);
+
 $path = explode('/', $request);
 $method = $_SERVER["REQUEST_METHOD"];
+$date = (new DateTime)->format(DateTime::RFC850);
 $api = [
 	"code"=> 200,
 	"data"=> [],
-	"date"=> "Thu, 31 Dec 2015 12=>00=>00 +0000",
+	"date"=> $date,
 	"identity"=> "index",
 	"message"=> "OK",
 	"method"=> $method,
@@ -38,9 +54,16 @@ $api = [
 ];
 $api["input"] = $input = json_decode(file_get_contents("php://input"));
 $api["error"] = null;
+
 switch ($request) {
 	default:
-		exit (json_encode($path));
+		$http_response_code = 404; // Not Found
+		$api["error"] = [
+			"code" => 404,
+			"message" => "Not Found",
+			"type" => "ServerException",
+			"url" => "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5",
+		];
 		break;
 	case "index":
 		$api["identity"] = "index";
@@ -51,6 +74,28 @@ switch ($request) {
 			"session_id" => "djbncdslkjdnlfkjhlkdjhcdfklhjk",
 		];
 		break;
+	case "account/signin":
+		$api["identity"] = "account/signin";
+		switch ($method) {
+			case "POST":
+				$api["data"] = [
+					"fullName" => "Anton Trofimenko",
+					"email" => "at@mail.ru",
+					"accessToken" => "djbncdslkjdnlfkjhlkdjhcdfklhjk",
+				];
+				break;
+			default:
+				$http_response_code = 400; // Bad Request
+				$api["status"] = "error";
+				$api["error"] = [
+					"code" => 400,
+					"message" => "Bad Request",
+					"type" => "ServerException",
+					"url" => "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1",
+				];
+				break;
+		}
+	break;
 	case "user_register":
 		$api["identity"] = "user_register";
 		switch ($method) {
@@ -64,7 +109,7 @@ switch ($request) {
 			default:
 				$http_response_code = 400; // Bad Request
 				$api["error"] = [
-					"code" => 200,
+					"code" => 400,
 					"message" => "Bad Request",
 					"type" => "ServerException",
 					"url" => "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1",
@@ -197,6 +242,7 @@ switch ($request) {
 		break;
 }
 //
+$api["code"] = $http_response_code;
 $body = json_encode($api);
 http_response_code($http_response_code);
 foreach ($headers as $key => $value) {
