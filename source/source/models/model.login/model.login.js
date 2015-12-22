@@ -7,8 +7,8 @@ define("model.login", [
 ], function () {
 	RAD.model("model.login", Backbone.Model.extend({
 		defaults: {
-			"login_signin_email": "test@test.test",
-			"login_signin_password": "12345",
+			//"login_signin_email": "test@test.test",
+			//"login_signin_password": "12345",
 			"login_signup_fullname": "",
 			"login_signup_email": "",
 			"login_signup_password": "",

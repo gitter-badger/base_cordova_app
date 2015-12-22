@@ -10,6 +10,10 @@ define("model.navigation", [
 		defaults: {
 			title: "",
 			mode: "login",
+
+			"login_signin_email": "test@test.test",
+			"login_signin_password": "12345",
+
 			is_session_active: function () {
 				return !!RAD.model("model.account").get("accessToken");
 			},
@@ -31,6 +35,19 @@ define("model.navigation", [
 		 * @override Backbone.Model.prototype.toJSON
 		 */
 		toJSON: RAD.model("model.basic").toJSON(),
+		validate: function (attrs, options) {
+			if (options.signin) {
+				if (!attrs.login_signin_email) {
+					return __("please fill email field");
+				}
+				if (!RAD.helper.util.validate.email(attrs.login_signin_email)) {
+					return __("email field is incorrect");
+				}
+				if (!attrs.login_signin_password) {
+					return __("please fill password field");
+				}
+			}
+		},
 		accountEvent: function (active) {
 			if (active) {
 				this.set("mode", "active");

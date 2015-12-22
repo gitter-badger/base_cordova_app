@@ -17,19 +17,19 @@ define("screen.login", [
 			 */
 			this.model = RAD.model("model.login");
 			this.events = {
-				"keyup #login_signin_email": "eventKeyUp",
-				"keyup #login_signin_password": "eventKeyUp",
-				"tap   #login_signin_submit": "eventTapSigninSubmit",
+				//"keyup #login_signin_email": "eventKeyUp",
+				//"keyup #login_signin_password": "eventKeyUp",
+				//"tap   #login_signin_submit": "eventTapSigninSubmit",
 				//
 				"keyup #login_signup_fullname": "eventKeyUp",
 				"keyup #login_signup_email": "eventKeyUp",
 				"keyup #login_signup_password": "eventKeyUp",
 				"tap   #login_signup_submit": "eventTapSignupSubmit",
 				//
-				"input          #login_signin_email": "eventInputSigninEmail",
-				"propertychange #login_signin_email": "eventInputSigninEmail",
-				"input          #login_signin_password": "eventInputSigninPassword",
-				"propertychange #login_signin_password": "eventInputSigninPassword",
+				//"input          #login_signin_email": "eventInputSigninEmail",
+				//"propertychange #login_signin_email": "eventInputSigninEmail",
+				//"input          #login_signin_password": "eventInputSigninPassword",
+				//"propertychange #login_signin_password": "eventInputSigninPassword",
 				//
 				"input          #login_signup_fullname": "eventInputSignupFullname",
 				"propertychange #login_signup_fullname": "eventInputSignupFullname",
@@ -44,13 +44,13 @@ define("screen.login", [
 			this.model.trigger("change");
 		}
 
-		eventInputSigninEmail(event) {
-			onInput.call(this, "login_signin_email", event);
-		}
+		//eventInputSigninEmail(event) {
+		//	onInput.call(this, "login_signin_email", event);
+		//}
 
-		eventInputSigninPassword(event) {
-			onInput.call(this, "login_signin_password", event);
-		}
+		//eventInputSigninPassword(event) {
+		//	onInput.call(this, "login_signin_password", event);
+		//}
 
 		eventInputSignupFullname(event) {
 			onInput.call(this, "login_signup_fullname", event);
@@ -75,9 +75,9 @@ define("screen.login", [
 					let jumpFromTo = {
 						"login_signin_email": "#login_signin_password",
 						"login_signin_password": "#login_signin_submit",
-						"login_signup_fullname": "#login_signup_email",
-						"login_signup_email": "#login_signup_password",
-						"login_signup_password": "#login_signup_submit",
+						//"login_signup_fullname": "#login_signup_email",
+						//"login_signup_email": "#login_signup_password",
+						//"login_signup_password": "#login_signup_submit",
 					};
 					if (Object.keys(jumpFromTo).includes(event.currentTarget.id)) {
 						this._jumpToElement(jumpFromTo[event.currentTarget.id]);
@@ -89,28 +89,28 @@ define("screen.login", [
 			}
 		}
 
-		eventTapSigninSubmit() {
-			if (!this.model.isValid({signin: true})) {
-				RAD.popup.toast("", this.model.validationError, "warning");
-				return;
-			}
-			let signin = [
-				this.model.get("login_signin_email"),
-				this.model.get("login_signin_password"),
-				response =>
-					this.publish("navigation.show", {
-						container_id: "#screen",
-						content: "screen.menu",
-						extras: {
-							response,
-						},
-						animation: "slide-in",
-					})
-				,
-				RAD.popup.toast.server_error,
-			];
-			RAD.core.publish("service.rest.account_signin", signin);
-		}
+		//eventTapSigninSubmit() {
+		//	if (!this.model.isValid({signin: true})) {
+		//		RAD.popup.toast("", this.model.validationError, "warning");
+		//		return;
+		//	}
+		//	let signin = [
+		//		this.model.get("login_signin_email"),
+		//		this.model.get("login_signin_password"),
+		//		response =>
+		//			this.publish("navigation.show", {
+		//				container_id: "#screen",
+		//				content: "screen.menu",
+		//				extras: {
+		//					response,
+		//				},
+		//				animation: "slide-in",
+		//			})
+		//		,
+		//		RAD.popup.toast.server_error,
+		//	];
+		//	RAD.core.publish("service.rest.account_signin", signin);
+		//}
 
 		eventTapSignupSubmit() {
 			if (!this.model.isValid({signup: true})) {
