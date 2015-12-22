@@ -24,20 +24,32 @@ define("helper.util", ["underscore",], function () {
 				return /^[a-zA-Zа-яА-Я_\s]{1,30}$/.test(string);
 			}
 		},
+		/**
+		 * Create object instance with methods defined as properties.
+		 * @param {Class|Function} Constructor
+		 * @return {Object}
+		 */
 		instance: function (Constructor) {
-			var instance = new Constructor;
-			var keys = Reflect.ownKeys(instance);
-			for (let name of Object.getOwnPropertyNames(Object.getPrototypeOf(instance))) {
-				let method = instance[name];
-				if (!(method instanceof Function) || method === Constructor) {
-					continue;
-				}
-				keys.push(name);
-			}
-			var obj = {};
-			keys.forEach(name => obj[name] = instance[name]);
+			let instance = new Constructor;
+			let obj = {};
+			Reflect.ownKeys(instance)
+				.forEach(name => obj[name] = instance[name]);
+			Object.getOwnPropertyNames(Object.getPrototypeOf(instance))
+				.forEach(function (name) {
+					if (!(instance[name] instanceof Function) || instance[name] === Constructor) { // skip constructor
+						return;
+					}
+					obj[name] = instance[name];
+				});
 			return obj;
-		}
+		},
+		getResult: function (variable, context) {
+			if (_.isFunction(variable)) {
+				return variable.call(context);
+			} else {
+				return variable;
+			}
+		},
 	};
 	/**
 	 * @class RAD.helper.util

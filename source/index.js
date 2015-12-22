@@ -29,6 +29,7 @@
 			],
 			model: [
 				"account",
+				"basic",
 				"login",
 				"navigation",
 				"person",

@@ -1,9 +1,10 @@
 "use strict";
-define("service.account", ["helper.storage", "service.basic",], function () {
-	/**
-	 * @class RAD.service.account
-	 */
-	RAD.service("service.account", RAD.Blanks.Service.extend({
+define("service.account", [
+	"helper.storage",
+	"helper.util",
+	"service.basic",
+], function () {
+	let ServiceAccount = {
 		onReceiveMsg: RAD.core.getService("service.basic").onReceiveMsg,
 		model: RAD.model("model.account"),
 		/**
@@ -24,5 +25,21 @@ define("service.account", ["helper.storage", "service.basic",], function () {
 			this.model.set(attrs);
 			this.model.save();
 		},
-	}));
+		/**
+		 * @param {Function=} callback
+		 * @return {boolean}
+		 */
+		is_active: function (callback) {
+			let isActive = !!this.model.get("accessToken");
+			if (_.isFunction(callback)) {
+				callback(null, isActive);
+			} else {
+				return isActive;
+			}
+		},
+	};
+	/**
+	 * @class RAD.service.account
+	 */
+	RAD.service("service.account", RAD.Blanks.Service.extend(ServiceAccount));
 });

@@ -10,7 +10,7 @@ define("screen.menu", [
 		}
 
 		onEndAttach () {
-			console.info("onEndAttach");
+			console.info("Start Loading Menu");
 		}
 	}
 	RAD.view("screen.menu", RAD.Blanks.View.extend(_.instance(ScreenMenu)));

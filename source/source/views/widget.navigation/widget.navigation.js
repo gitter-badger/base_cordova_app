@@ -8,12 +8,20 @@ define("widget.navigation", [
 		constructor() {
 			this.className = "labaster";
 			this.url = "source/views/widget.navigation/widget.navigation.ejs";
+			/**
+			 * @see RAD.model.navigation
+			 */
 			this.model = RAD.model("model.navigation");
 		}
 
-		onEndAttach () {
-			console.info("onEndAttach");
+		onInitialize () {
+			console.info("WidgetNavigation::onInitialize");
 		}
+
+		onEndAttach () {
+
+		}
+
 	}
 	RAD.view("widget.navigation", RAD.Blanks.View.extend(_.instance(WidgetNavigation)));
 });
