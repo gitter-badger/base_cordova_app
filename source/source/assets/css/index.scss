@@ -8,15 +8,8 @@
 @import "popup.dialog";
 @import "widget.spinner";
 
-body {
-	font-family: system, -apple-system, "Hack", monospace;
-}
-
-#screen_main > ul {
-	color: #fff;
-	background-color: $color-pink;
-	margin: 16px;
-	padding: 8px;
+* {
+	font-family: "Hack", monospace !important;
 }
 
 .toast {
@@ -35,7 +28,7 @@ body {
 }
 
 #screen {
-	margin-top: 50px;
+	//margin-top: 50px;
 }
 
 html {
@@ -76,4 +69,23 @@ h6, .h6 {
 
 .container {
 	width: 100%;
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+	background-color: rgb(255, 255, 255) !important;
+	background-image: none !important;
+	color: rgb(0, 0, 0) !important;
+}
+
+//
+
+#screen_main > ul {
+	color: #fff;
+	background-color: $color-pink;
+	margin: 16px;
+	padding: 8px;
+}
+
+section {
+	padding-top: 50px;
 }

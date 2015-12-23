@@ -7,11 +7,12 @@ define("screen.menu", [
 		constructor() {
 			this.url = "source/views/screen.menu/screen.menu.ejs";
 			this.model = RAD.model("collection.quiz");
+			this.className = "override-scroll";
 		}
 
 		onEndAttach () {
-			console.info("Start Loading Menu");
+			console.info("Load quiz now");
 		}
 	}
-	RAD.view("screen.menu", RAD.Blanks.View.extend(_.instance(ScreenMenu)));
+	RAD.view("screen.menu", RAD.Blanks.ScrollableView.extend(_.instance(ScreenMenu)));
 });

@@ -79,6 +79,19 @@ define("helper.translate", [
 			"ru": "MobiDev тесты",
 			"ua": "MobiDev тести",
 		},
+		"login header": {
+			"en": "Account Registration",
+			"ru": "Регистрация Аккаунта",
+			"ua": "Реєстрація Аккаунта",
+		},
+		"login welcome": {
+			"en": `MobiDev is a fast-growing IT software development company with offices in Atlanta (US) and Wurzburg (Germany), and development centers in Kharkiv, Mariupol, Mykolaiv and Chernivtsi. We are oriented to deliver high quality projects and to establish long-term cooperation with product owners.
+We are greatly focused on the result. We select a methodology according to the project and our customer’s needs. Agile-driven management methodologies if needed. We use quality control on each step of development: from building requirements to the deployment of the product.`,
+			"ru": `MobiDev является быстро растущей ИТ-разработчик программного обеспечения с офисами в Атланте (США) и Вюрцбурге (Германия), и центры развития в Харькове, Мариуполе, Николаеве и Черновцах. Мы ориентированы на реализации проектов высокого качества и установить долгосрочное сотрудничество с владельцами продукта.
+Мы очень ориентированы на результат. Мы выбираем методику в соответствии с проектом и потребностей наших клиентов. Agile методологии приводом управления, если требуется. Мы используем контроль качества на каждом этапе развития: от создания требования к развертыванию продукта.`,
+			"ua": `MobiDev є швидко зростаючої ІТ-розробник програмного забезпечення з офісами в Атланті (США) і Вюрцбурзі (Німеччина), і центри розвитку в Харкові, Маріуполі, Миколаєві та Чернівцях. Ми орієнтовані на реалізації проектів високої якості і встановити довгострокове співробітництво з власниками продукту.
+Ми дуже орієнтовані на результат. Ми вибираємо методику відповідно до проекту і потреб наших клієнтів. Agile методології приводом управління, якщо потрібно. Ми використовуємо контроль якості на кожному етапі розвитку: від створення вимоги до розгортання продукту.`,
+		}
 	};
 
 	function translate(text, mode) {

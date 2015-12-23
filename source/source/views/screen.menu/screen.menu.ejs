@@ -1,15 +1,17 @@
-<div id="screen_main" class="container">
-	<center>
-		<img alt="CrossPlatform" src="source/assets/img/cross_platform_icon.png"/>
-	</center>
-	{{# model.forEach(function(item, index){ }}
-	<ul>
-		<li>#{{ index + 1 }}</li>
-		<li>Name: {{ item.id }}</li>
-		<li>Phone Number: {{ item.name }}</li>
-	</ul>
-	{{# }) }}
-</div>
-<center>
-	<button type="button" class="btn btn-primary">Wee</button>
-</center>
+<section class="container sroll-view">
+	<div class="row">
+		<center>
+			<img alt="CrossPlatform" src="source/assets/img/cross_platform_icon.png"/>
+		</center>
+		{{# model.forEach(function(item, index){ }}
+		<ul>
+			<li>#{{ index + 1 }}</li>
+			<li>Name: {{ item.id }}</li>
+			<li>Phone Number: {{ item.name }}</li>
+		</ul>
+		{{# }) }}
+		<center>
+			<button type="button" class="btn btn-primary">Wee</button>
+		</center>
+	</div>
+</section>

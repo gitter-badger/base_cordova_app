@@ -1,29 +1,17 @@
-<div class="container">
-
+<section class="container sroll-view">
 	<div class="row">
-		<div class="col-md-4">
-			<h2>Heading</h2>
-			<p>111</p>
-			<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-		</div>
-		<div class="col-md-4">
-			<h2>Heading</h2>
-			<p>222</p>
-			<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-		</div>
-		<div class="col-md-4">
-			<h2>Heading</h2>
-			<p>333</p>
-			<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+		<div class="col-md-12">
+			<h1>{{ __("login header") }}</h1>
+			<p>{{ __("login welcome") }}</p>
 		</div>
 	</div>
-
 	<hr>
-
-	<section>
+	<div class="row">
 		<form>
-			<div class="form-group">
-				<fieldset>
+			<div class="col-md-3">
+				<h2>{{ __('fullname') }}</h2>
+				<div class="form-group">
+					<input style="display:none">
 					<input
 						autocapitalize="off"
 						autocomplete="off"
@@ -31,15 +19,17 @@
 						class="form-control"
 						data-template="true"
 						id="login_signup_fullname"
-						onfocus="this.removeAttribute('readonly');"
 						placeholder="{{ __('fullname') }}"
-						readonly="readonly"
 						spellcheck="false"
 						type="email"
 						value="{{ model.login_signup_fullname }}"
 					>
-				</fieldset>
-				<fieldset>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<h2>{{ __('email') }}</h2>
+				<div class="form-group">
+					<input style="display:none">
 					<input
 						autocapitalize="off"
 						autocomplete="off"
@@ -47,15 +37,18 @@
 						class="form-control"
 						data-template="true"
 						id="login_signup_email"
-						onfocus="this.removeAttribute('readonly');"
 						placeholder="{{ __('email') }}"
-						readonly="readonly"
 						spellcheck="false"
 						type="email"
 						value="{{ model.login_signup_email }}"
 					>
-				</fieldset>
-				<fieldset>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<h2>{{ __('password') }}</h2>
+				<p>
+				<div class="form-group">
+					<input style="display:none">
 					<input
 						autocapitalize="off"
 						autocomplete="off"
@@ -63,24 +56,25 @@
 						class="form-control"
 						data-template="true"
 						id="login_signup_password"
-						onfocus="this.removeAttribute('readonly');"
 						placeholder="{{ __('password') }}"
-						readonly="readonly"
 						spellcheck="false"
 						type="password"
 						value="{{ model.login_signup_password }}"
 					>
-				</fieldset>
-				<fieldset>
+				</div>
+				</p>
+			</div>
+			<div class="col-md-3">
+				<h2>&nbsp;</h2>
+				<div class="form-group">
 					<button
 						id="login_signup_submit"
-						class="btn btn-success"
+						class="btn btn-success from-control"
 						type="button"
 					>{{ __('sign up') }}
 					</button>
-				</fieldset>
+				</div>
 			</div>
 		</form>
-	</section>
-	<!--<footer><p>&copy; 2015 Company, Inc.</p></footer>-->
-</div>
+	</div>
+</section>

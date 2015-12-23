@@ -10,10 +10,8 @@ define("model.navigation", [
 		defaults: {
 			title: "",
 			mode: "login",
-
-			"login_signin_email": "test@test.test",
-			"login_signin_password": "12345",
-
+			"login_signin_email": "test@test.test", // @todo remove
+			"login_signin_password": "12345", // @todo remove
 			is_session_active: function () {
 				return !!RAD.model("model.account").get("accessToken");
 			},
