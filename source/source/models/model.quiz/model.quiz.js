@@ -5,7 +5,7 @@ define("model.quiz", ["backbone",], function () {
 	 */
 	RAD.model("model.quiz", Backbone.Model.extend({
 		defaults: {
-			id: "",
+			quizId: "",
 			name: "",
 		}
 	}), false);

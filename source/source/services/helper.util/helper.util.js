@@ -50,6 +50,53 @@ define("helper.util", ["underscore",], function () {
 				return variable;
 			}
 		},
+		/**
+		 * @param {*} anything
+		 * @return {Object}
+		 */
+		toObject: function (anything) {
+			switch (true) {
+				case anything instanceof Map:
+					return this.MapToObject(anything);
+					break;
+				case this.isClass(anything):
+					return this.instance(anything);
+					break;
+				default:
+					return {};
+					break;
+			}
+		},
+		/**
+		 * @param {Map} map
+		 * @return {Object}
+		 */
+		MapToObject: function (map) {
+			let object = {};
+			map.forEach((value, key) => object[key] = value);
+			return object;
+		},
+		/**
+		 * Returns the type of the argument
+		 * @param {*} val
+		 * @returns {String}
+		 */
+		getType: function (val) {
+			if (typeof val === 'undefined') return 'undefined';
+			if (typeof val === 'object' && !val) return 'null';
+			return ({}).toString.call(val).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+		},
+		isClass: function (val) {
+			let type = this.getType(val);
+			if (type !== "function") {
+				return false;
+			}
+			if (type[0] !== "{") {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	};
 	/**
 	 * @class RAD.helper.util

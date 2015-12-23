@@ -74,7 +74,7 @@ define("screen.login", [
 				RAD.popup.toast("", this.model.validationError, "warning");
 				return;
 			}
-			let signup = [
+			RAD.core.publish("service.rest.account_signup", [
 				this.model.get("login_signup_fullname"),
 				this.model.get("login_signup_email"),
 				this.model.get("login_signup_password"),
@@ -89,12 +89,11 @@ define("screen.login", [
 					})
 				,
 				RAD.popup.toast.server_error,
-			];
-			RAD.core.publish("service.rest.account_signup", signup);
+			]);
 		}
 	}
 	/**
 	 * @class RAD.screen.login
 	 */
-	RAD.view("screen.login", RAD.Blanks.ScrollableView.extend(_.instance(ScreenLogin)));
+	RAD.view("screen.login", RAD.Blanks.ScrollableView.extend(_.toObject(ScreenLogin)));
 });

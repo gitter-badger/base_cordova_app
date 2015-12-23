@@ -20,7 +20,7 @@ define("service.rest", [
 				crossDomain: true,
 				dataType: "json",
 				headers: {
-					"Accept-Language": "ru",
+					"Accept-Language": RAD.helper.settings.language,
 				},
 				timeout: RAD.helper.settings.server.timeout,
 				xhrFields: {
@@ -30,19 +30,29 @@ define("service.rest", [
 		},
 		/**
 		 * Basic headers for REST
-		 * @param headersToAppend
-		 * @return {Headers}
+		 * @param {Object=} headersToAppend
+		 * @param {boolean} asArray
+		 * @return {Array|Headers}
 		 * @private
 		 */
-		_headersCompose: function (headersToAppend) {
-			let headers = new Headers();
+		_headersCompose: function (headersToAppend, asArray) {
+			let headers = null;
+			if (asArray) {
+				headers = new Map;
+			} else {
+				headers = new Headers();
+			}
 			headers.set("Accept", "application/json");
 			headers.set("Content-Type", "application/json");
+			headers.set("Accept-Language", "ru");
 			let accessToken = RAD.model("model.account").get("accessToken");
 			if (accessToken) {
 				headers.set("accessToken", accessToken);
 			}
 			_.each(headersToAppend, (name, value) => headers.set(name, value));
+			if (asArray) {
+				headers = _.toObject(headers);
+			}
 			return headers;
 		},
 		/**
@@ -81,18 +91,42 @@ define("service.rest", [
 		 * @private
 		 */
 		_fetch: function (url, done, fail, requrestOptions = {}, timeoutInMs = RAD.helper.settings.server.timeout) {
-			let request = new Request(url, this._fetchOptions(requrestOptions));
 			let _fetch = RAD.helper.fetch;
-			Promise.race([
-					_fetch.timeoutPromise(timeoutInMs),
-					window.fetch(request),
-				])
-				.then(_fetch.isPromise)
-				.then(_fetch.isOk)
-				.then(_fetch.statusOk)
-				.then(_fetch.responseJson)
-				.then(response => done(response))
-				.catch(response => fail(response));
+			let ajax = {
+				/**
+				 * @param {jqXHR} jqXHR
+				 * @param {string} textStatus
+				 */
+				complete: function (jqXHR, textStatus) {
+					if (jqXHR.status >= 200 && jqXHR.status < 300) {
+						done(jqXHR.responseJSON);
+					} else {
+						if (textStatus === "parseerror") {
+							fail(_fetch.errorFromResponse("parseerror"));
+						} else {
+							fail(_fetch.errorFromResponse(jqXHR));
+						}
+					}
+				},
+				body: requrestOptions.body,
+				headers: this._headersCompose({}, true),
+				method: requrestOptions.method,
+				timeout: timeoutInMs,
+				url: url,
+			};
+			$.ajax(ajax);
+			//let request = new Request(url, this._fetchOptions(requrestOptions));
+			//let _fetch = RAD.helper.fetch;
+			//Promise.race([
+			//		_fetch.timeoutPromise(timeoutInMs),
+			//		window.fetch(request),
+			//	])
+			//	.then(_fetch.isPromise)
+			//	.then(_fetch.isOk)
+			//	.then(_fetch.statusOk)
+			//	.then(_fetch.responseJson)
+			//	.then(response => done(response))
+			//	.catch(response => fail(response));
 		},
 		/**
 		 * Compose url for fetch request
@@ -137,7 +171,11 @@ define("service.rest", [
 		 * @param {Function=} always
 		 * RAD.core.publish("service.rest.user_authorize", ["r@gmail.com", "12345",]);
 		 */
-		account_signin: function (email, password, done = this._done, fail = this._fail, always = this._always) {
+		account_signin: function (email
+			, password
+			, done = this._done
+			, fail = this._fail
+			, always = this._always) {
 			let timerId = _.delay(RAD.widget.spin.show, 500);
 			this._fetch(
 				this._urlCompose(["account", "signin"]),
@@ -169,17 +207,32 @@ define("service.rest", [
 		 * @param {String} password
 		 * @param {Function=} done
 		 * @param {Function=} fail
+		 * @param {Function=} always
 		 * @example
 		 * RAD.core.publish("service.rest.user_register", ["Anton Trofimenko", "r@gmail.com", "12345",]);
 		 */
-		account_signup: function (fullName, email, password, done = this._done, fail = this._fail) {
+		account_signup: function (fullName
+			, email
+			, password
+			, done = this._done
+			, fail = this._fail
+			, always = this._always) {
+			let timerId = _.delay(RAD.widget.spin.show, 500);
 			this._fetch(
 				this._urlCompose(["account", "signup"]),
 				json => {
+					clearTimeout(timerId);
+					RAD.widget.spin.hide();
 					this.publish("service.account.signup", json.data);
 					done(json);
+					_.execute(always, [json]);
 				},
-				(...args) => fail(...args),
+				(...args) => {
+					clearTimeout(timerId);
+					RAD.widget.spin.hide();
+					fail(...args);
+					_.execute(always, [args]);
+				},
 				{
 					method: "POST",
 					body: {
@@ -191,11 +244,17 @@ define("service.rest", [
 		/**
 		 * @example RAD.core.publish("service.rest.quiz_list");
 		 */
-		quiz_list: function (done = this._done, fail = this._fail) {
+		quiz_list: function (done = this._done, fail = this._fail, always = this._always) {
 			this._fetch(
 				this._urlCompose("quiz"),
-				json => done(json),
-				(...args) => fail(...args)
+				json => {
+					done(json);
+					_.execute(always, [json]);
+				},
+				(...args) => {
+					fail(...args);
+					_.execute(always, [args]);
+				}
 			);
 		},
 		quiz_start: function (quizId, done = this._done, fail = this._fail) {

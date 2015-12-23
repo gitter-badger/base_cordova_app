@@ -1,17 +1,48 @@
 <section class="container sroll-view">
 	<div class="row">
-		<center>
-			<img alt="CrossPlatform" src="source/assets/img/cross_platform_icon.png"/>
-		</center>
-		{{# model.forEach(function(item, index){ }}
-		<ul>
-			<li>#{{ index + 1 }}</li>
-			<li>Name: {{ item.id }}</li>
-			<li>Phone Number: {{ item.name }}</li>
+{{#
+	if (!model.length) {
+}}
+		<div class="jumbotron">
+
+			<div class="alert alert-info" role="alert">{{ __("there is no quiz") }}</div>
+
+			<div class="form-group">
+				<button
+					id="menu_refresh_list"
+					class="btn btn-primary from-control center-block"
+					type="button"
+				>{{ __("refresh list") }}</button>
+			</div>
+
+		</div>
+{{#
+	} else {
+}}
+		<ul class="list-group">
+{{#
+		model.forEach(function(item, index) {
+}}
+
+			<li class="list-group-item list-group-item-success">{{ item.quizId }}: {{ item.name }}</li>
+
+			<!--<li class="list-group-item list-group-item-success">Dapibus ac facilisis in</li>-->
+			<!--<li class="list-group-item list-group-item-info">Cras sit amet nibh libero</li>-->
+			<!--<li class="list-group-item list-group-item-warning">Porta ac consectetur ac</li>-->
+			<!--<li class="list-group-item list-group-item-danger">Vestibulum at eros</li>-->
+
+
+		<!--<ul>-->
+			<!--<li>#{{ index + 1 }}</li>-->
+			<!--<li>Name: {{ item.id }}</li>-->
+			<!--<li>Phone Number: {{ item.name }}</li>-->
+		<!--</ul>-->
+{{#
+		});
+}}
 		</ul>
-		{{# }) }}
-		<center>
-			<button type="button" class="btn btn-primary">Wee</button>
-		</center>
+{{#
+	}
+}}
 	</div>
 </section>

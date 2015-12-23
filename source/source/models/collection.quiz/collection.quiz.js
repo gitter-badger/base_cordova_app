@@ -1,7 +1,7 @@
 "use strict";
 define("collection.quiz", ["model.quiz",], function () {
 	/**
-	 * @class RAD.coleection.phones
+	 * @class RAD.coleection.quiz
 	 */
 	RAD.model("collection.quiz", Backbone.Collection.extend({
 		/**
@@ -9,10 +9,10 @@ define("collection.quiz", ["model.quiz",], function () {
 		 */
 		model: RAD.model("model.quiz"),
 		defaults: [
-			{
-				id: "",
-				name: "Nothing to show",
-			},
+			//{
+			//	id: "",
+			//	name: "Nothing to show",
+			//},
 		],
 		initialize: function (models, options) {
 			this.defaults.forEach(
@@ -20,6 +20,6 @@ define("collection.quiz", ["model.quiz",], function () {
 					(new (RAD.model("model.quiz"))).set(model)
 				)
 			);
-		}
+		},
 	}), true);
 });

@@ -15,7 +15,6 @@ define("widget.navigation", [
 			 * @see RAD.model.navigation
 			 */
 			this.model = RAD.model("model.navigation");
-
 			this.events = {
 				"keyup #login_signin_email": "eventKeyUp",
 				"keyup #login_signin_password": "eventKeyUp",
@@ -71,7 +70,7 @@ define("widget.navigation", [
 				RAD.popup.toast("", this.model.validationError, "warning");
 				return;
 			}
-			let signin = [
+			RAD.core.publish("service.rest.account_signin", [
 				this.model.get("login_signin_email"),
 				this.model.get("login_signin_password"),
 				response =>
@@ -85,9 +84,8 @@ define("widget.navigation", [
 					})
 				,
 				RAD.popup.toast.server_error,
-			];
-			RAD.core.publish("service.rest.account_signin", signin);
+			]);
 		}
 	}
-	RAD.view("widget.navigation", RAD.Blanks.View.extend(_.instance(WidgetNavigation)));
+	RAD.view("widget.navigation", RAD.Blanks.View.extend(_.toObject(WidgetNavigation)));
 });

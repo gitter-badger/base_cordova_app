@@ -55,6 +55,33 @@ $api = [
 $api["input"] = $input = json_decode(file_get_contents("php://input"));
 $api["error"] = null;
 
+$ajax = [];
+if (function_exists('apache_request_headers')) {
+	$ajax = apache_request_headers();
+} else {
+	function parseRequestHeaders() {
+		$headers = array();
+		foreach($_SERVER as $key => $value) {
+			if (substr($key, 0, 5) <> 'HTTP_') {
+				continue;
+			}
+			$header = str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))));
+			$headers[$header] = $value;
+		}
+		return $headers;
+	}
+	$ajax = parseRequestHeaders();
+}
+
+$lng = $ajax["accept-language"] ?? $ajax["Accept-Language"] ?? "ru";
+
+// echo json_encode($lng);
+// die("");
+
+
+
+
+
 switch ($request) {
 	default:
 		$http_response_code = 404; // Not Found
@@ -117,19 +144,37 @@ switch ($request) {
 				break;
 		}
 		break;
-	case "quiz_list":
-		$api["identity"] = "quiz_list";
+	case "quiz":
+		$api["identity"] = "quiz";
 		//
 		$input["accessToken"] = "SDJVKN7X34C373I7X3I7GHXCGI677X7857GHX478GHX487"; // @todo debug
 		//
+
+		//$ajax["accept-language"];
+
 		if (empty($input["accessToken"])) {
+
 			$http_response_code = 401; // Unauthorized
+
+			$api["message"] = "Unauthorized";
+			$api["status"] = "error";
 			$api["error"] = [
 				"code" => 401,
 				"message" => "Unauthorized",
+				"description" => "You are not authorized",
 				"type" => "ServerException",
 				"url" => "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2",
 			];
+
+			switch($lng) {
+				case "ru":
+					$api["error"]["description"] = "Авторизация не удалась";
+					break;
+				case "ua":
+					$api["error"]["description"] = "Авторизацiя не вийшла";
+                	break;
+			}
+
 		} else {
 			$api["data"] = [
 				[
